@@ -15,17 +15,17 @@ export default new Router({
       path: '/viewFaculty',
       name: 'viewFaculty',
       component: viewFaculty
-    },dfgdfsgsdgsdgf
+    },
     {
       path: '/add',
       name: 'add',
       component: add
-
     },
     {
       path: '/update',
       name: 'update',
       component: update
+      kjashdkfhjas
     },
     {
       path: '/view',

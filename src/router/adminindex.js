@@ -20,7 +20,6 @@ export default new Router({
       path: '/admin/faculty/add',
       name: 'add',
       component: add
-
     },
     {
       path: '/admin/faculty/update',

@@ -4,7 +4,7 @@ import viewFaculty from '@/components/admin/Faculty/viewFaculty'
 import add from '@/components/admin/Faculty/add'
 import update from '@/components/admin/Faculty/update'
 import view from '@/components/admin/Faculty/view'
-import studentview from '@/components/admin/student/view'
+import studentview from '@/components/admin/student/view/'
 import create from '@/components/admin/course/create'
 
 Vue.use(Router)
@@ -12,33 +12,33 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/viewFaculty',
+      path: '/admin/Faculty/viewFaculty',
       name: 'viewFaculty',
       component: viewFaculty
-    },dfgdfsgsdgsdgf
+    },
     {
-      path: '/add',
+      path: '/admin/faculty/add',
       name: 'add',
       component: add
 
     },
     {
-      path: '/update',
+      path: '/admin/faculty/update',
       name: 'update',
       component: update
     },
     {
-      path: '/view',
+      path: '/admin/faculty/view/:faculty_id',
       name: 'view',
       component: view
     },
     {
-      path: '/studentview',
+      path: '/admin/student/view',
       name: 'studentview',
       component: studentview
     },
     {
-      path: '/create',
+      path: '/admin/course/create',
       name: 'create',
       component: create
     }

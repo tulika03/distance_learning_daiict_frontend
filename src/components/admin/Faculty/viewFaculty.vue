@@ -2,7 +2,7 @@
   <v-container>
     <v-layout>
       <v-flex>
-        <v-btn :to="'/add/'" class="green white--text right"> ADD FACULTY </v-btn>
+        <v-btn :to="'/admin/faculty/add/'" class="green white--text right"> ADD FACULTY </v-btn>
       </v-flex>
     </v-layout>
 
@@ -10,7 +10,7 @@
 
       <v-layout row wrap>
         <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item.facultyId"  :to="'/view/'" >
+          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item.facultyId"  :to="'/admin/faculty/view/:faculty_id/'" >
             <v-container fluid>
               <v-layout row>
                 <v-flex xs5 sm4 md3>
@@ -31,7 +31,7 @@
                   </v-card-title>
 
                   <v-card-actions>
-                    <v-btn flat class="orange darken-3 white--text" :to="'/update/'">Edit</v-btn>
+                    <v-btn flat class="orange darken-3 white--text" :to="'/admin/faculty/update/'">Edit</v-btn>
                     <v-btn flat class="orange darken-3 white--text">Delete</v-btn>
                   </v-card-actions>
 
@@ -56,6 +56,7 @@
         sideNav: false,
         items: [
           {
+            faculty_id: '1',
             faculty_photo: 'http://www.daiict.ac.in/daiict/images/faculty/asim_banerjee.jpg',
             faculty_name: 'Aseem Banerjee',
             faculty_educational_details: '\t\n' +
@@ -66,6 +67,7 @@
             faculty_contact_number: '07930510554'
           },
           {
+            faculty_id: '2',
             faculty_photo: 'http://www.daiict.ac.in/daiict/images/faculty/Yash_Agrawal_Photo.jpg',
             faculty_name: 'Agrawal, Yash',
             faculty_educational_details: 'PhD (Electronics & Communication Engineering)\n' +

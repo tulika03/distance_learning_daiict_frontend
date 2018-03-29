@@ -46,9 +46,9 @@
       return {
         sideNav: false,
         menuItems: [
-          { title: 'Faculty', icon: 'dashboard', link: '/viewFaculty' },
-          {title: 'Student', icon: 'dashboard', link: '/studentview'},
-          {title: 'Course', icon: 'dashboard', link: '/create'}
+          { title: 'Faculty', icon: 'dashboard', link: '/admin/faculty/viewFaculty' },
+          {title: 'Student', icon: 'dashboard', link: '/admin/student/view'},
+          {title: 'Course', icon: 'dashboard', link: '/admin/course/create'}
 
         ],
         right: null

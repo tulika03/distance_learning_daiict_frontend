@@ -32,13 +32,14 @@
                     name="faculty_name"
                     required
                   ></v-text-field>
-              <v-text-field name="faculty_photo"
-                            label="Image Url"
-                            id="image-Url"
-                            v-model="faculty_photo"
-                            required>
+              <label>Upload Image*</label>    <br><br>
+              <div>
+                <input type=file
+                       @change="onFileSelected"
+                       class="text--primary" required>
+              </div>
 
-              </v-text-field>
+
 
                  <v-text-field
                 label="E-mail"
@@ -106,7 +107,7 @@
       return {
         faculty_id: '',
         faculty_name: '',
-        faculty_photo: '',
+        faculty_photo: null,
         faculty_email: '',
         faculty_password: '',
         faculty_contact_number: '',
@@ -151,6 +152,10 @@
           .catch((error) => {
             console.log(error)
           })
+      },
+
+      onFileSelected (event) {
+        this.faculty_photo = event.target.files[0]
       }
     }
   }

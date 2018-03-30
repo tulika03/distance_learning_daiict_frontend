@@ -1,63 +1,86 @@
 <template>
   <v-container>
+    <v-spacer></v-spacer>
+    <v-layout>
+      <v-flex>
+        <h2 class="text-md-center mb-4 red--text">
+          Add New Course
+        </h2>
+      </v-flex>
 
-    <div>
-
-      <v-layout row wrap>
-        <v-flex xs12 sm5 offset-sm3>
-          <v-card class="light-blue lighten-4 mb-2" v-for="item in items" :key="item.courseId">
-            <v-container fluid style="min-height: 0;"
-                         grid-list-lg>
-                  <v-card-title primary-title>
-                    <div>
-                      <div><h3 class="Grey--text darken-1" mp-0>{{ item.Course_Id }} </h3></div>
-                      <div> Course Subject: {{ item.Course_Subject }}</div>
-                    </div>
-                  </v-card-title>
-
-                  <v-card-actions>
-                    <v-btn flat class="green white--text">Delete</v-btn>
-                  </v-card-actions>
-
-
-
-            </v-container>
-
-          </v-card>
+    </v-layout>
+    <div
+      style="min-width: 560px; margin: auto;"
+      class="orange lighten-4" >
+      <v-layout row>
+        <v-flex xs12 sm6 offset-sm3>
+          <v-container>
+            <v-form @submit.prevent="addCourse">
+              <v-text-field
+                label="Course Id"
+                v-model="Course_Id"
+                name="Course_Id"
+                required
+              ></v-text-field>
+                            <v-text-field
+                label="Course Name"
+                name="Course_Subject"
+                v-model="Course_Subject"
+                required></v-text-field>
+              <v-layout row>
+                <v-flex xs12 sm6>
+                  <v-btn flat class="indigo"
+                         :disabled="!formIsValid"
+                         type="submit"
+                         @click="addCourse"
+                  >Add
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-form>
+          </v-container>
         </v-flex>
       </v-layout>
     </div>
   </v-container>
-
 </template>
 
 
-
 <script>
+  import axios from 'axios'
   export default {
     data () {
       return {
-        sideNav: false,
-        items: [
-          { Course_Id: '629',
-            Course_Subject: 'Data Structure'
-          },
-          {
-            Course_Id: '234',
-            Course_Subject: 'Programmig in C'
-          }
+        Course_Id: '',
+        Course_Subject: ''
 
-        ],
-        created: function () {
-          /*  this.loadQuote(); */
-        },
-        methods: {
-          loadQuote () {
-            /* axios.get('https://sheltered-spire-10162.herokuapp.com/admin/faculty/view/') */
-          }
+      }
+    },
+
+    computed: {
+      formIsValid () {
+        return this.Course_Id !== '' &&
+          this.Course_Subject !== ''
+      }
+    },
+    methods: {
+      addCourse () {
+        if (!this.formIsValid) {
+          return
         }
+        const CourseData = {
+          Course_Id: this.Course_Id,
+          Course_Subject: this.Course_Subject
+        }
+        console.log(CourseData)
+        axios.post('https://sheltered-spire-10162.herokuapp.com/admin/course/create/')
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     }
   }
 </script>
-

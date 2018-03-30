@@ -6,6 +6,7 @@ import update from '@/components/admin/Faculty/update'
 import view from '@/components/admin/Faculty/view'
 import studentview from '@/components/admin/student/view/'
 import create from '@/components/admin/course/create'
+import removeCourse from '@/components/admin/course/remove'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/admin/course/create',
       name: 'create',
       component: create
+    },
+    {
+      path: '/admin/course/remove',
+      name: 'removeCourse',
+      component: removeCourse
     }
   ],
   mode: 'history'

@@ -7,6 +7,9 @@ import view from '@/components/admin/Faculty/view'
 import studentview from '@/components/admin/student/view/'
 import create from '@/components/admin/course/create'
 import removeCourse from '@/components/admin/course/remove'
+// import facultyprofile from '@/components/user/Faculty/viewprofile'
+// import editprofile from '@/components/user/Faculty/editprofile'
+// import viewcourse from '@/components/user/Faculty/viewcourse'
 
 Vue.use(Router)
 
@@ -46,6 +49,21 @@ export default new Router({
       path: '/admin/course/remove',
       name: 'removeCourse',
       component: removeCourse
+    // },
+    // {
+    //   path: '/user/Faculty/profile',
+    //   name: 'profileFaculty',
+    //   component: facultyprofile
+    // },
+    // {
+    //   path: '/user/Faculty/editprofile',
+    //   name: 'editprofile',
+    //   component: editprofile
+    // },
+    // {
+    //   path: '/user/Faculty/viewcourse',
+    //   name: 'viewcourse',
+    //   component: viewcourse
     }
   ],
   mode: 'history'

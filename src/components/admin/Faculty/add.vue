@@ -20,8 +20,9 @@
                   <v-text-field
                     label="Faculty Id"
                     name="faculty_id"
-                    v-model="faculty_id"
+                    v-model.number="faculty_id"
                     required
+                    :rules="idRules"
                   ></v-text-field>
 
 
@@ -31,6 +32,7 @@
                     v-model="faculty_name"
                     name="faculty_name"
                     required
+                    :rules="nameRules"
                   ></v-text-field>
               <label>Upload Image*</label>    <br><br>
               <div>
@@ -45,6 +47,8 @@
                 label="E-mail"
                 name="faculty_email"
                 v-model="faculty_email"
+                type="email"
+                :rules="emailRules"
                 required
                  ></v-text-field>
 
@@ -53,6 +57,7 @@
                 name="faculty_password"
                 v-model="faculty_password"
                 required
+                :rules="passwordRules"
               ></v-text-field>
 
 
@@ -60,7 +65,8 @@
                   <v-text-field name="faculty_contact_number"
                                 label="Contact"
                                 id="contact"
-                                v-model="faculty_contact_number"
+                                v-model.number="faculty_contact_number"
+                                :rules="contactRules"
                                 required>
 
                   </v-text-field>
@@ -69,6 +75,7 @@
                                 label="Educational Details"
                                 id="educational-detail"
                                 v-model="faculty_educational_details"
+                                :rules="eduRules"
                                 required>
 
                   </v-text-field>
@@ -77,6 +84,7 @@
                                 label="Interest Area"
                                 id="interest-area"
                                 v-model="faculty_area_interest"
+                                :rules="interestRules"
                                 required>
 
                   </v-text-field>
@@ -105,26 +113,49 @@
   export default {
     data () {
       return {
-        faculty_id: '',
+        faculty_id: null,
+        idRules: [
+          v => !!v || 'Id is required'
+        ],
         faculty_name: '',
+        nameRules: [
+          v => !!v || 'Name is required',
+          v => v.length <= 40 || 'Name must be less than 40 characters'
+        ],
         faculty_photo: null,
         faculty_email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
         faculty_password: '',
-        faculty_contact_number: '',
+        passwordRules: [
+          v => !!v || 'Password is required'
+        ],
+        faculty_contact_number: null,
+        contactRules: [
+          v => !!v || 'Contact number is required'
+        ],
         faculty_educational_details: '',
-        faculty_area_interest: ''
+        eduRules: [
+          v => !!v || 'Educational Qualification detail is required'
+        ],
+        faculty_area_interest: '',
+        interestRules: [
+          v => !!v || 'Area of interest is required'
+        ]
 
       }
     },
 
     computed: {
       formIsValid () {
-        return this.faculty_id !== '' &&
+        return Number(this.faculty_id) !== null &&
           this.faculty_name !== '' &&
           this.faculty_photo !== '' &&
           this.faculty_email !== '' &&
           this.faculty_password !== '' &&
-          this.faculty_contact_number !== '' &&
+         Number(this.faculty_contact_number) !== null &&
           this.faculty_educational_details !== '' &&
           this.faculty_area_interest !== ''
       }
@@ -153,7 +184,6 @@
             console.log(error)
           })
       },
-
       onFileSelected (event) {
         this.faculty_photo = event.target.files[0]
       }

@@ -72,7 +72,7 @@
               {title: 'View Faculty', icon: 'view_array', link: '/admin/faculty/viewFaculty'}
             ]
           },
-          {title: 'Student', icon: 'dashboard', link: '/admin/student/view'},
+          {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
           {title: 'Course',
             icon: 'dashboard',
             active: true,
@@ -80,7 +80,9 @@
               {title: 'View Course', icon: 'view_array', link: '/admin/course/remove'},
               {title: 'Create Course', icon: 'note_add', link: '/admin/course/create'}
             ]
-          }
+          },
+          {title: 'Enquiries', icon: 'dashboard', link: '/admin/inquiry/showInquiries'},
+          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
 
         ],
         right: null

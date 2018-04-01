@@ -1,6 +1,14 @@
 <template>
 
-
+  <v-container>
+    <v-spacer></v-spacer>
+    <v-layout>
+      <v-flex>
+        <h2 class="text-md-center mb-5 red--text">
+          Students Details
+        </h2>
+      </v-flex>
+    </v-layout>
   <v-layout>
     <v-flex>
       <v-data-table
@@ -28,6 +36,7 @@
       </v-data-table>
     </v-flex>
   </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -36,11 +45,7 @@
       return {
         headers: [
           {
-            text: 'Student ID',
-            align: 'left',
-            sortable: true,
-            value: 'Student_Id'
-          },
+            text: 'Student ID', align: 'left', sortable: true, value: 'Student_Id'},
           { text: 'Student Name', value: 'Student_Name' },
           { text: 'Gender', value: 'Student_Gender' },
           { text: 'Email Id', value: 'Student_EmailId' },

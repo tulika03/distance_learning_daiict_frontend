@@ -50,44 +50,33 @@
 
 
 <script>
+  import Axios from 'axios'
   export default {
     data () {
       return {
         sideNav: false,
-        items: [
-          {
-            faculty_id: '1',
-            faculty_photo: 'http://www.daiict.ac.in/daiict/images/faculty/asim_banerjee.jpg',
-            faculty_name: 'Aseem Banerjee',
-            faculty_educational_details: '\t\n' +
-            'PhD (Electrical Engineering) \n' +
-            'IIT Bombay',
-            faculty_area_interest: ' Pattern Recognition, Medical Imaging, Image Processing, Digital Signal Processing, Speech Coding, Software Engineering, Software Quality Assurance and Project Management',
-            faculty_email: 'asim_banerjee@daiict.ac.in',
-            faculty_contact_number: '07930510554'
-          },
-          {
-            faculty_id: '2',
-            faculty_photo: 'http://www.daiict.ac.in/daiict/images/faculty/Yash_Agrawal_Photo.jpg',
-            faculty_name: 'Agrawal, Yash',
-            faculty_educational_details: 'PhD (Electronics & Communication Engineering)\n' +
-            'NIT, Hamirpur, Himachal Pradesh',
-            faculty_area_interest: 'Design, modeling and simulation of high performance VLSI interconnects, Nanotechnology',
-            faculty_email: 'yash_agarwal@daiict.ac.in',
-            faculty_contact_number: '07930510629'
-          }
-
-        ],
-        created: function () {
-        /*  this.loadQuote(); */
-        },
-        methods: {
-          loadQuote () {
-            /* axios.get('https://sheltered-spire-10162.herokuapp.com/admin/faculty/view/') */
-          }
+        items: {
+          faculty_id: '',
+          faculty_name: '',
+          faculty_photo: '',
+          faculty_email: '',
+          faculty_contact_number: '',
+          faculty_educational_details: '',
+          faculty_area_interest: ''
         }
       }
+    },
+    created: function () {
+      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/faculty/view/', {
+        params: {
+        }
+      })
+        .then((response) => {
+          this.items = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 </script>
-

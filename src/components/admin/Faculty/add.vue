@@ -4,7 +4,7 @@
     <v-layout>
       <v-flex>
         <h2 class="text-md-center mb-4 red--text">
-          Add New Faculty
+        Add New Faculty
         </h2>
       </v-flex>
 
@@ -35,14 +35,14 @@
                     :rules="nameRules"
                   ></v-text-field>
               <label>Upload Image*</label>    <br><br>
-              <div>
+              <div v-if="!faculty_photo">
                 <input type=file
                        @change="onFileSelected"
                        class="text--primary" required>
-              </div>
-
-
-
+              </div >
+              <div v-else>
+                <img :src="faculty_photo" style="width: 150px; height: 150px">
+                </div>
                  <v-text-field
                 label="E-mail"
                 name="faculty_email"
@@ -113,7 +113,7 @@
   export default {
     data () {
       return {
-        faculty_id: null,
+        faculty_id: '',
         idRules: [
           v => !!v || 'Id is required'
         ],
@@ -122,7 +122,7 @@
           v => !!v || 'Name is required',
           v => v.length <= 40 || 'Name must be less than 40 characters'
         ],
-        faculty_photo: null,
+        faculty_photo: '',
         faculty_email: '',
         emailRules: [
           v => !!v || 'E-mail is required',
@@ -132,7 +132,7 @@
         passwordRules: [
           v => !!v || 'Password is required'
         ],
-        faculty_contact_number: null,
+        faculty_contact_number: '',
         contactRules: [
           v => !!v || 'Contact number is required'
         ],
@@ -185,7 +185,15 @@
           })
       },
       onFileSelected (event) {
-        this.faculty_photo = event.target.files[0]
+        var files = event.target.files || event.dataTransfer.files
+        this.createImg(files[0])
+      },
+      createImg (file) {
+        var reader = new FileReader()
+        reader.onload = (event) => {
+          this.faculty_photo = event.target.result
+        }
+        reader.readAsDataURL(file)
       }
     }
   }

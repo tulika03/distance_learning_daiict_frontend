@@ -1,5 +1,61 @@
 <template>
-  <v-container>
+  <v-container fluid="true">
+
+    <v-navigation-drawer fixed temporary v-model="sideNav" fixed temporary>
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0 ">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src=" " >
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-layout>
+        <v-flex>
+          <v-card>
+            <v-list class="pt-0" dense>
+              <v-list-group
+                v-model="item.active"
+                v-for="item in menuItems"
+                :key="item.title"
+
+                :prepend-icon="item.icon"
+                no-action>
+                <v-list-tile slot="activator" :key="item.title" @click=""
+                             router :to="item.link">
+                  <v-list-tile-content>
+                    <v-list-tile-title >{{ item.title }}</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile v-for="subItem in item.menuItems" :key="subItem.title" @click="" router :to="subItem.link">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-icon>{{ subItem.icon }}</v-icon>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-list-group>
+            </v-list>
+          </v-card>
+        </v-flex>
+      </v-layout>
+
+    </v-navigation-drawer>
+
+    <v-toolbar class="primary">
+      <v-toolbar-side-icon @click.stop="sideNav=!sideNav" />
+      <v-toolbar-title class="white--text">
+        <router-link to="/" tag="span" style="cursor: pointer">Distance learning </router-link></v-toolbar-title>
+      <v-spacer> </v-spacer>
+    </v-toolbar>
+    <main>
+      <router-view></router-view>
+    </main>
     <v-spacer></v-spacer>
     <v-layout>
       <v-flex>
@@ -18,16 +74,6 @@
             <v-form @submit.prevent="addFaculty">
 
                   <v-text-field
-                    label="Faculty Id"
-                    name="faculty_id"
-                    v-model.number="faculty_id"
-                    required
-                    :rules="idRules"
-                  ></v-text-field>
-
-
-
-                  <v-text-field
                     label="Name"
                     v-model="faculty_name"
                     name="faculty_name"
@@ -35,15 +81,13 @@
                     :rules="nameRules"
                   ></v-text-field>
               <label>Upload Image*</label>    <br><br>
-              <div v-if="!faculty_photo">
+              <div>
                 <input type=file
                        @change="onFileSelected"
                        class="text--primary" required>
               </div >
-              <div v-else>
-                <img :src="faculty_photo" style="width: 150px; height: 150px">
-                </div>
-                 <v-text-field
+              <br>
+               <v-text-field
                 label="E-mail"
                 name="faculty_email"
                 v-model="faculty_email"
@@ -54,6 +98,7 @@
 
               <v-text-field
                 label="Password"
+                type="password"
                 name="faculty_password"
                 v-model="faculty_password"
                 required
@@ -113,10 +158,6 @@
   export default {
     data () {
       return {
-        faculty_id: '',
-        idRules: [
-          v => !!v || 'Id is required'
-        ],
         faculty_name: '',
         nameRules: [
           v => !!v || 'Name is required',
@@ -143,30 +184,56 @@
         faculty_area_interest: '',
         interestRules: [
           v => !!v || 'Area of interest is required'
-        ]
+        ],
+        sideNav: false,
+        menuItems: [
+          {
+            title: 'Faculty',
+            icon: 'perm_identity',
+            active: true,
+            menuItems: [
+              {title: 'Add Faculty', icon: 'note_add', link: '/admin/faculty/add'},
+              {title: 'View Faculty', icon: 'view_array', link: '/admin/faculty/viewFaculty'}
+            ]
+          },
+          {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
+          {title: 'Course',
+            icon: 'dashboard',
+            active: true,
+            menuItems: [
+              {title: 'View Course', icon: 'view_array', link: '/admin/course/remove'},
+              {title: 'Create Course', icon: 'note_add', link: '/admin/course/create'}
+            ]
+          },
+          {title: 'Enquiries', icon: 'dashboard', link: '/admin/inquiry/showInquiries'},
+          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
+
+        ],
+        right: null
 
       }
     },
 
     computed: {
       formIsValid () {
-        return Number(this.faculty_id) !== null &&
-          this.faculty_name !== '' &&
-          this.faculty_photo !== '' &&
+        return this.faculty_name !== '' &&
           this.faculty_email !== '' &&
           this.faculty_password !== '' &&
-         Number(this.faculty_contact_number) !== null &&
+          this.faculty_contact_number !== '' &&
           this.faculty_educational_details !== '' &&
           this.faculty_area_interest !== ''
       }
     },
     methods: {
+      onFileSelected (event) {
+        this.faculty_photo = event.target.files[0]
+        console.log(this.faculty_photo)
+      },
       addFaculty () {
         if (!this.formIsValid) {
           return
         }
         const facultyData = {
-          faculty_id: this.faculty_id,
           faculty_name: this.faculty_name,
           faculty_photo: this.faculty_photo,
           faculty_email: this.faculty_email,
@@ -176,24 +243,9 @@
           faculty_area_interest: this.faculty_area_interest
         }
         console.log(facultyData)
-        axios.post('https://sheltered-spire-10162.herokuapp.com/admin/faculty/add/')
-          .then((response) => {
-            console.log(response)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-      onFileSelected (event) {
-        var files = event.target.files || event.dataTransfer.files
-        this.createImg(files[0])
-      },
-      createImg (file) {
-        var reader = new FileReader()
-        reader.onload = (event) => {
-          this.faculty_photo = event.target.result
-        }
-        reader.readAsDataURL(file)
+        axios.post('http://192.168.137.1:3000/admin/faculty/add/', this.facultyData, {headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+        }}).then(r => console.log('r: ', JSON.stringify(r, null, 2)))
       }
     }
   }

@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import viewFaculty from '@/components/admin/Faculty/viewFaculty'
-import add from '@/components/admin/Faculty/add'
-import update from '@/components/admin/Faculty/update'
-import view from '@/components/admin/Faculty/view'
-import studentview from '@/components/admin/student/sview/'
-import create from '@/components/admin/course/create'
-import removeCourse from '@/components/admin/course/remove'
+import adminHome from '@/components/admin/AdminHome'
+import adminviewFaculty from '@/components/admin/Faculty/viewFaculty'
+import adminadd from '@/components/admin/Faculty/add'
+import adminupdate from '@/components/admin/Faculty/update'
+import adminview from '@/components/admin/Faculty/view'
+import adminstudentview from '@/components/admin/student/sview/'
+import admincreate from '@/components/admin/course/create'
+import adminremoveCourse from '@/components/admin/course/remove'
 import AdminListComplains from '@/components/admin/complain/listcomplains'
 import AdminviewComplain from '@/components/admin/complain/viewComplain'
 import AdminListInquiries from '@/components/admin/inquiry/showInquiries'
@@ -16,39 +17,44 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/admin/',
+      name: 'adminHome',
+      component: adminHome
+    },
+    {
       path: '/admin/Faculty/viewFaculty',
-      name: 'viewFaculty',
-      component: viewFaculty
+      name: 'adminviewFaculty',
+      component: adminviewFaculty
     },
     {
       path: '/admin/faculty/add',
-      name: 'add',
-      component: add
+      name: 'adminadd',
+      component: adminadd
     },
     {
       path: '/admin/faculty/update',
-      name: 'update',
-      component: update
+      name: 'adminupdate',
+      component: adminupdate
     },
     {
       path: '/admin/faculty/view/:faculty_id',
-      name: 'view',
-      component: view
+      name: 'adminview',
+      component: adminview
     },
     {
       path: '/admin/student/sview',
-      name: 'studentview',
-      component: studentview
+      name: 'adminstudentview',
+      component: adminstudentview
     },
     {
       path: '/admin/course/create',
-      name: 'create',
-      component: create
+      name: 'admincreate',
+      component: admincreate
     },
     {
       path: '/admin/course/remove',
-      name: 'removeCourse',
-      component: removeCourse
+      name: 'adminremoveCourse',
+      component: adminremoveCourse
     },
     {
       path: '/admin/complain/listcomplains',

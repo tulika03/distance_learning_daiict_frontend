@@ -23,6 +23,7 @@ import {
   VDataTable,
   VTooltip,
   VProgressLinear,
+  VSubheader,
   transitions
 } from 'vuetify'
 import '../node_modules/vuetify/src/stylus/app.styl'
@@ -45,6 +46,7 @@ Vue.use(Vuetify, {
     VDataTable,
     VTooltip,
     VProgressLinear,
+    VSubheader,
     transitions
   },
   theme: {

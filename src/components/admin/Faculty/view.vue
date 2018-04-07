@@ -114,14 +114,14 @@
       return {
         sideNav: false,
         items: {
-            faculty_name: '',
-            faculty_photo: '',
-            faculty_email: '',
-            faculty_password: '',
-            faculty_contact_number: '',
-            faculty_educational_details: '',
-            faculty_area_interest: ''
-          },
+          faculty_name: '',
+          faculty_photo: '',
+          faculty_email: '',
+          faculty_password: '',
+          faculty_contact_number: '',
+          faculty_educational_details: '',
+          faculty_area_interest: ''
+        },
         menuItems: [
           {
             title: 'Faculty',
@@ -145,23 +145,23 @@
          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
         ],
         right: null
-       }
-      },
-      methods: {
-                async getDetail () {
-                  console.log('view id called')
-                  Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
-                  .then((response) => {
-                  console.log(response.data[0])
-                  this.items = response.data[0]
-                    })
-                  .catch((error) => {
-                  console.log("Hello " + error)
-                  })
-              }
-             },
-              mounted () {
-                this.getDetail()
-              }
+      }
+    },
+    methods: {
+      async getDetail () {
+        console.log('view id called')
+        Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
+        .then((response) => {
+          console.log(response.data[0])
+          this.items = response.data[0]
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    mounted () {
+      this.getDetail()
+    }
   }
 </script>

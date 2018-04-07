@@ -135,7 +135,7 @@
                   </v-text-field>
                 </v-card-text>
                 <v-card-actions >
-                  <v-btn @click="" color="indigo" class="text--white"> SUBMIT </v-btn>
+                  <v-btn @click="updateFaculty" color="indigo" class="text--white"> SUBMIT </v-btn>
                 </v-card-actions>
               </v-flex>
             </v-layout>
@@ -209,14 +209,14 @@
       },
       updateFaculty () {
         const fd = new FormData()
-        fd.append('faculty_photo', this.faculty_photo)
-        fd.append('faculty_name', this.faculty_name)
-        fd.append('faculty_email', this.faculty_email)
-        fd.append('faculty_password', this.faculty_password)
-        fd.append('faculty_contact_number', this.faculty_contact_number)
-        fd.append('faculty_educational_details', this.faculty_educational_details)
-        fd.append('faculty_area_interest', this.faculty_area_interest)
-        Axios.patch('http://192.168.137.1:3000/admin/faculty/update' + this.$route.params.id, fd,
+        // fd.append('faculty_photo', this.faculty_photo)
+        fd.append('faculty_name', this.items.faculty_name)
+        fd.append('faculty_email', this.items.faculty_email)
+        fd.append('faculty_password', this.items.faculty_password)
+        fd.append('faculty_contact_number', this.items.faculty_contact_number)
+        fd.append('faculty_educational_details', this.items.faculty_educational_details)
+        fd.append('faculty_area_interest', this.items.faculty_area_interest)
+        Axios.patch('http://192.168.137.1:3000/admin/faculty/update/' + this.$route.params.id, fd,
           {headers: { 'Content-type': 'multipart/form-data' }})
           .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
           .catch(error => {

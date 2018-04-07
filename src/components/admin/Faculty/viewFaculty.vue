@@ -69,7 +69,7 @@
 
       <v-layout row wrap>
         <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item.facultyId"  :to="'/admin/faculty/view/:faculty_id/'" >
+          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item._id"  v-bind:to= "{name: 'adminview', params: {id: item._id } }" >
             <v-container fluid>
               <v-layout row>
                 <v-flex xs5 sm4 md3>
@@ -90,8 +90,8 @@
                   </v-card-title>
 
                   <v-card-actions>
-                    <v-btn flat class="orange darken-3 white--text" :to="'/admin/faculty/update/'">Edit</v-btn>
-                    <v-btn flat class="orange darken-3 white--text">Delete</v-btn>
+                    <v-btn flat class="orange darken-3 white--text" v-bind:to= "{name: 'adminupdate', params: {id: item._id }}">Edit</v-btn>
+                    <v-btn flat class="orange darken-3 white--text" @click="deleteData(item._id)">Delete</v-btn>
                   </v-card-actions>
 
                 </v-flex>
@@ -115,7 +115,7 @@
       return {
         sideNav: false,
         items: {
-          faculty_id: '',
+          _id: '',
           faculty_name: '',
           faculty_photo: '',
           faculty_email: '',
@@ -146,11 +146,13 @@
           {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
 
         ],
+
+        deleteUrl: function (id) { return this.path + id },
         right: null
       }
     },
     created: function () {
-      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/faculty/view/', {
+      Axios.get('http://192.168.137.1:3000/admin/faculty/view/', {
         params: {
         }
       })
@@ -160,6 +162,20 @@
         .catch((error) => {
           console.log(error)
         })
+    },
+    methods: {
+      deleteData: function (_id) {
+        // var delUrl = this.deleteUrl(_id)
+        // console.log('delete route =[' + delUrl + ']')
+        Axios.delete('http://192.168.137.1:3000/admin/faculty/remove/', {params: { id: this.items._id }})
+          .then(res => {
+            console.log(res)
+            console.log('it works')
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     }
   }
 </script>

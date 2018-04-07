@@ -61,7 +61,7 @@
    <v-layout>
      <v-flex>
 
-        <v-card>
+        <v-card  @submit.prevent="updateFaculty" enctype="multipart/form-data">
           <v-container>
             <v-layout row wrap>
               <v-flex xs12>
@@ -78,59 +78,60 @@
                 <v-card-text>
                   <v-text-field
                     label="Faculty name"
-                    name="fname"
-                    v-model="fname"
-                  ></v-text-field>
+                    name="items.faculty_name"
+                    v-model="items.faculty_name"
+                  >{{ items.faculty_name }}</v-text-field>
                 </v-card-text>
 
-                <v-card-text>
-                  <v-text-field
-                    label="Image Url"
-                    name="imageUrl"
-                    v-model="imageUrl"
-                  ></v-text-field>
-                </v-card-text>
+                <label>Upload Image*</label>    <br><br>
+                <div>
+                  <input type=file
+                         @change="onFileSelected"
+                         class="text--primary" required
+                         accept="image/*">
+                </div >
+                <br>
 
               <v-card-text>
                 <v-text-field
                   label="E-mail"
-                  name="email"
-                  v-model="email"
-                ></v-text-field>
+                  name="items.faculty_email"
+                  v-model="items.faculty_email"
+                >
+                  {{ items.faculty_email }}
+                </v-text-field>
               </v-card-text>
 
                 <v-card-text>
                   <v-text-field
                     label="Password"
-                    name="password"
-                    v-model="password"
+                    type="password"
+                    name="items.faculty_password"
+                    v-model="items.faculty_password"
                   ></v-text-field>
                 </v-card-text>
 
                 <v-card-text>
-                  <v-text-field name="contact"
+                  <v-text-field name=" items.faculty_contact_number"
                                 label="Contact"
-                                id="contact"
-                                v-model="contact"
+                                v-model="items.faculty_contact_number"
                                 >
-
+                          {{ items.faculty_contact_number }}
                   </v-text-field>
                 </v-card-text>
                 <v-card-text>
-                  <v-text-field name="eduDetail"
+                  <v-text-field name="items.faculty_educational_details"
                                 label="Educational Details"
-                                id="educational-detail"
-                                  v-model="eduDetail">
+                               v-model="items.faculty_educational_details">
 
                   </v-text-field>
                 </v-card-text>
                 <v-card-text>
-                  <v-text-field name="interest"
+                  <v-text-field name="items.faculty_area_interest"
                                 label="Interest Area"
-                                id="interest-area"
-                                v-model="interest"
+                                v-model="items.faculty_area_interest"
                                 >
-
+                            {{ items.faculty_area_interest }}
                   </v-text-field>
                 </v-card-text>
                 <v-card-actions >
@@ -147,16 +148,20 @@
 </template>
 
 <script>
+  import Axios from 'axios'
   export default {
     data () {
       return {
-        fname: '',
-        imageUrl: '',
-        email: '',
-        password: '',
-        contact: '',
-        eduDetail: '',
-        interest: '',
+        items: {
+          _id: '',
+          faculty_name: '',
+          faculty_photo: '',
+          faculty_email: '',
+          faculty_password: '',
+          faculty_contact_number: '',
+          faculty_educational_details: '',
+          faculty_area_interest: ''
+        },
         sideNav: false,
         menuItems: [
           {
@@ -184,6 +189,43 @@
         right: null
 
       }
+    },
+    methods: {
+      onFileSelected (event) {
+        this.faculty_photo = event.target.files[0]
+        console.log(this.faculty_photo)
+      },
+      async getDetail () {
+        console.log('view id called')
+        Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
+          .then((response) => {
+            console.log(response.data[0])
+            this.items = response.data[0]
+            console.log(this.items)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      updateFaculty () {
+        const fd = new FormData()
+        fd.append('faculty_photo', this.faculty_photo)
+        fd.append('faculty_name', this.faculty_name)
+        fd.append('faculty_email', this.faculty_email)
+        fd.append('faculty_password', this.faculty_password)
+        fd.append('faculty_contact_number', this.faculty_contact_number)
+        fd.append('faculty_educational_details', this.faculty_educational_details)
+        fd.append('faculty_area_interest', this.faculty_area_interest)
+        Axios.patch('http://192.168.137.1:3000/admin/faculty/update' + this.$route.params.id, fd,
+          {headers: { 'Content-type': 'multipart/form-data' }})
+          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+          .catch(error => {
+            console.log(error.response)
+          })
+      }
+    },
+    mounted () {
+      this.getDetail()
     }
   }
 </script>

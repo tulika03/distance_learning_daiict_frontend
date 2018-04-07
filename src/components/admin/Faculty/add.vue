@@ -71,7 +71,7 @@
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
-            <v-form @submit.prevent="addFaculty">
+            <v-form @submit.prevent="addFaculty" enctype="multipart/form-data">
 
                   <v-text-field
                     label="Name"
@@ -84,7 +84,9 @@
               <div>
                 <input type=file
                        @change="onFileSelected"
-                       class="text--primary" required>
+                       class="text--primary" required
+                       accept="image/*"
+                        >
               </div >
               <br>
                <v-text-field
@@ -166,8 +168,7 @@
         faculty_photo: '',
         faculty_email: '',
         emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+          v => !!v || 'E-mail is required'
         ],
         faculty_password: '',
         passwordRules: [
@@ -230,22 +231,23 @@
         console.log(this.faculty_photo)
       },
       addFaculty () {
+        const fd = new FormData()
         if (!this.formIsValid) {
           return
         }
-        const facultyData = {
-          faculty_name: this.faculty_name,
-          faculty_photo: this.faculty_photo,
-          faculty_email: this.faculty_email,
-          faculty_password: this.faculty_password,
-          faculty_contact_number: this.faculty_contact_number,
-          faculty_educational_details: this.faculty_educational_details,
-          faculty_area_interest: this.faculty_area_interest
-        }
-        console.log(facultyData)
-        axios.post('http://192.168.137.1:3000/admin/faculty/add/', this.facultyData, {headers: {
-          'Content-type': 'application/x-www-form-urlencoded'
-        }}).then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+        fd.append('faculty_photo', this.faculty_photo)
+        fd.append('faculty_name', this.faculty_name)
+        fd.append('faculty_email', this.faculty_email)
+        fd.append('faculty_password', this.faculty_password)
+        fd.append('faculty_contact_number', this.faculty_contact_number)
+        fd.append('faculty_educational_details', this.faculty_educational_details)
+        fd.append('faculty_area_interest', this.faculty_area_interest)
+        axios.post('http://192.168.137.1:3000/admin/faculty/add', fd,
+          {headers: { 'Content-type': 'multipart/form-data' }})
+  .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+          .catch(error => {
+            console.log(error.response)
+          })
       }
     }
   }

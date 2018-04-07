@@ -69,18 +69,18 @@
     <div
       style="max-width: 660px; margin: auto;"
       class="orange lighten-4" >
-      <v-card  v-for="item in items" :key="item.faculty_id">
+      <v-card>
         <v-container
           fluid
           style="min-height: 0;"
           grid-list-lg>
           <v-layout row wrap>
             <v-flex xs12 >
-              <v-card-title style="align-items: right"> <h4>{{ item.faculty_name }}</h4></v-card-title>
+              <v-card-title style="align-items: right"> <h4>{{ items.faculty_name }}</h4></v-card-title>
                        </v-flex>
             <v-flex>
               <v-card-media
-                :src="item.faculty_photo"
+                :src="items.faculty_photo"
                 height="165px" width="150px" contain  >
               </v-card-media>
             </v-flex>
@@ -90,14 +90,10 @@
 
 <v-layout xs12 md9 class="blue--text darken-1">
   <v-flex>
-    <v-card-text > Faculty ID:
-      {{ item.facultyId }}
-    </v-card-text>
-    <v-card-text>Email Id: {{ item.faculty_email }} </v-card-text>
-    <v-card-text> Password: {{ item.faculty_password }} </v-card-text>
-    <v-card-text>Contact Number: {{ item.faculty_contact_number }}</v-card-text>
-    <v-card-text> Educational Qualification:{{ item.faculty_educational_details }} </v-card-text>
-    <v-card-text>Interest Area: {{ item.faculty_area_interest  }} </v-card-text>
+    <v-card-text>Email Id: {{ items.faculty_email }} </v-card-text>
+    <v-card-text>Contact Number: {{ items.faculty_contact_number }}</v-card-text>
+    <v-card-text> Educational Qualification:{{ items.faculty_educational_details }} </v-card-text>
+    <v-card-text>Interest Area: {{ items.faculty_area_interest  }} </v-card-text>
 
   </v-flex>
 </v-layout>
@@ -112,14 +108,12 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import Axios from 'axios'
   export default {
     data () {
       return {
         sideNav: false,
-        items: [
-          {
-
+        items: {
             faculty_name: '',
             faculty_photo: '',
             faculty_email: '',
@@ -127,9 +121,7 @@
             faculty_contact_number: '',
             faculty_educational_details: '',
             faculty_area_interest: ''
-          }
-
-        ],
+          },
         menuItems: [
           {
             title: 'Faculty',
@@ -149,23 +141,27 @@
             {title: 'Create Course', icon: 'note_add', link: '/admin/course/create'}
             ]
           },
-          {title: 'Enquiries', icon: 'dashboard', link: '/admin/inquiry/showInquiries'},
-          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
-
+         {title: 'Enquiries', icon: 'dashboard', link: '/admin/inquiry/showInquiries'},
+         {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
         ],
-        right: null,
-        mounted () {
-          axios.get('https://sheltered-spire-10162.herokuapp.com/admin/faculty/view/')
-            .then((response) => {
-              console.log(response.data)
-              this.items = response.data
-            })
-          .catch((error) => {
-            console.log(error)
-          })
-        }
-
-      }
-    }
+        right: null
+       }
+      },
+      methods: {
+                async getDetail () {
+                  console.log('view id called')
+                  Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
+                  .then((response) => {
+                  console.log(response.data[0])
+                  this.items = response.data[0]
+                    })
+                  .catch((error) => {
+                  console.log("Hello " + error)
+                  })
+              }
+             },
+              mounted () {
+                this.getDetail()
+              }
   }
 </script>

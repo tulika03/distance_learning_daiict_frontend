@@ -32,12 +32,12 @@ export default new Router({
       component: adminadd
     },
     {
-      path: '/admin/faculty/update',
+      path: '/admin/faculty/update/:id',
       name: 'adminupdate',
       component: adminupdate
     },
     {
-      path: '/admin/faculty/view/:faculty_id',
+      path: '/admin/faculty/view/:id',
       name: 'adminview',
       component: adminview
     },

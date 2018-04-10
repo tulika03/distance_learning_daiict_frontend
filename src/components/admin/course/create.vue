@@ -72,24 +72,24 @@
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
-            <v-form @submit.prevent="addCourse">
+            <v-form @submit.prevent="addCourses">
               <v-text-field
                 label="Course Id"
-                v-model="Course_Id"
-                name="Course_Id"
+                v-model="course_id"
+                name="course_id"
                 required
               ></v-text-field>
                             <v-text-field
                 label="Course Name"
-                name="Course_Subject"
-                v-model="Course_Subject"
+                name="course_subject"
+                v-model="course_subject"
                 required></v-text-field>
               <v-layout row>
                 <v-flex xs12 sm6>
                   <v-btn flat class="indigo"
                          :disabled="!formIsValid"
                          type="submit"
-                         @click="addCourse"
+                         @click="addCourses"
                   >Add
                   </v-btn>
                 </v-flex>
@@ -108,8 +108,8 @@
   export default {
     data () {
       return {
-        Course_Id: '',
-        Course_Subject: '',
+        course_id: '',
+        course_subject: '',
         sideNav: false,
         menuItems: [
           {
@@ -145,21 +145,18 @@
       }
     },
     methods: {
-      addCourse () {
+      addCourses () {
+        const fd = new FormData()
         if (!this.formIsValid) {
           return
         }
-        const CourseData = {
-          Course_Id: this.Course_Id,
-          Course_Subject: this.Course_Subject
-        }
-        console.log(CourseData)
-        axios.post('https://sheltered-spire-10162.herokuapp.com/admin/course/create/')
-          .then((response) => {
-            console.log(response)
-          })
-          .catch((error) => {
-            console.log(error)
+        fd.append('course_id', this.course_id)
+        fd.append('course_subject', this.course_subject)
+        axios.post('https://sheltered-spire-10162.herokuapp.com/admin/courses/add', fd,
+          {headers: { 'Content-type': 'multipart/form-data' }})
+          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+          .catch(error => {
+            console.log(error.response)
           })
       }
     }

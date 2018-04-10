@@ -80,6 +80,7 @@
                     label="Faculty name"
                     name="items.faculty_name"
                     v-model="items.faculty_name"
+                    required
                   >{{ items.faculty_name }}</v-text-field>
                 </v-card-text>
 
@@ -97,6 +98,7 @@
                   label="E-mail"
                   name="items.faculty_email"
                   v-model="items.faculty_email"
+                  required
                 >
                   {{ items.faculty_email }}
                 </v-text-field>
@@ -108,6 +110,7 @@
                     type="password"
                     name="items.faculty_password"
                     v-model="items.faculty_password"
+                    required
                   ></v-text-field>
                 </v-card-text>
 
@@ -115,6 +118,7 @@
                   <v-text-field name=" items.faculty_contact_number"
                                 label="Contact"
                                 v-model="items.faculty_contact_number"
+                                required
                                 >
                           {{ items.faculty_contact_number }}
                   </v-text-field>
@@ -122,7 +126,8 @@
                 <v-card-text>
                   <v-text-field name="items.faculty_educational_details"
                                 label="Educational Details"
-                               v-model="items.faculty_educational_details">
+                               v-model="items.faculty_educational_details"
+                                required>
 
                   </v-text-field>
                 </v-card-text>
@@ -130,6 +135,7 @@
                   <v-text-field name="items.faculty_area_interest"
                                 label="Interest Area"
                                 v-model="items.faculty_area_interest"
+                                required
                                 >
                             {{ items.faculty_area_interest }}
                   </v-text-field>
@@ -149,6 +155,7 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
@@ -196,32 +203,54 @@
         console.log(this.faculty_photo)
       },
       async getDetail () {
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
         console.log('view id called')
-        Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
-          .then((response) => {
-            console.log(response.data[0])
-            this.items = response.data[0]
-            console.log(this.items)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+        if (jwt) {
+          Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id,
+            {
+              headers: {
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then((response) => {
+              console.log(response.data[0])
+              this.items = response.data[0]
+              console.log(this.items)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        } else {
+          this.$router.push('/admin/login')
+        }
       },
       updateFaculty () {
         const fd = new FormData()
-        // fd.append('faculty_photo', this.faculty_photo)
+        fd.append('faculty_photo', this.faculty_photo)
         fd.append('faculty_name', this.items.faculty_name)
         fd.append('faculty_email', this.items.faculty_email)
         fd.append('faculty_password', this.items.faculty_password)
         fd.append('faculty_contact_number', this.items.faculty_contact_number)
         fd.append('faculty_educational_details', this.items.faculty_educational_details)
         fd.append('faculty_area_interest', this.items.faculty_area_interest)
-        Axios.patch('http://192.168.137.1:3000/admin/faculty/update/' + this.$route.params.id, fd,
-          {headers: { 'Content-type': 'multipart/form-data' }})
-          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
-          .catch(error => {
-            console.log(error.response)
-          })
+        var jwt = Vue.localStorage.get('token')
+        console.log('view id called')
+        if (jwt) {
+          Axios.patch('http://192.168.137.1:3000/admin/faculty/update/' + this.$route.params.id, fd,
+            {
+              headers: {
+                'Content-type': 'multipart/form-data',
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+            .catch(error => {
+              console.log(error.response)
+            })
+        } else {
+          this.$router.push('/admin/login')
+        }
       }
     },
     mounted () {

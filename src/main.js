@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './adminApp'
-import router from './router/adminindex'
+import router from './router/index'
 import colors from 'vuetify/es5/util/colors'
 
 import {

@@ -8,10 +8,12 @@ import adminview from '@/components/admin/Faculty/view'
 import adminstudentview from '@/components/admin/student/sview/'
 import admincreate from '@/components/admin/course/create'
 import adminremoveCourse from '@/components/admin/course/remove'
+import adminUpdateCourse from '@/components/admin/course/updateCourse'
 import AdminListComplains from '@/components/admin/complain/listcomplains'
-import AdminviewComplain from '@/components/admin/complain/viewComplain'
+import AdminViewComplain from '@/components/admin/complain/viewComplain'
 import AdminListInquiries from '@/components/admin/inquiry/showInquiries'
 import AdminviewInquiry from '@/components/admin/inquiry/viewInquiry'
+import AdminLogin from '@/components/admin/login'
 Vue.use(Router)
 
 export default new Router({
@@ -52,9 +54,14 @@ export default new Router({
       component: admincreate
     },
     {
-      path: '/admin/course/remove',
+      path: '/admin/course/remove/',
       name: 'adminremoveCourse',
       component: adminremoveCourse
+    },
+    {
+      path: '/admin/course/updateCourse/:id',
+      name: 'adminUpdateCourse',
+      component: adminUpdateCourse
     },
     {
       path: '/admin/complain/listcomplains',
@@ -62,9 +69,9 @@ export default new Router({
       component: AdminListComplains
     },
     {
-      path: '/admin/complain/viewComplain',
-      name: 'AdminviewComplain',
-      component: AdminviewComplain
+      path: '/admin/complain/viewComplain/:id',
+      name: 'AdminViewComplain',
+      component: AdminViewComplain
     },
     {
       path: '/admin/inquiry/showInquiries',
@@ -72,9 +79,14 @@ export default new Router({
       component: AdminListInquiries
     },
     {
-      path: '/admin/inquiry/viewInquiry',
+      path: '/admin/inquiry/viewInquiry/:id',
       name: 'AdminviewInquiry',
       component: AdminviewInquiry
+    },
+    {
+      path: '/admin/login',
+      name: 'AdminLogin',
+      component: AdminLogin
     }
   ],
   mode: 'history'

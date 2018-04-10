@@ -70,18 +70,21 @@
   <v-data-table
     :headers="headers"
     :items="items"
+    v-for="item in items"
+    :key="item._id"
     class="elevation-1"
   >
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.email_id }}</td>
-      <td class="text-xs-left"><b>{{ props.item.inquiry_subject }}</b></td>
-      <td> <v-btn :to="'/admin/inquiry/viewInquiry/'" class="green lighten-2 white--text"> View</v-btn></td>
+      <td>{{ props.item.inquiry_email }}</td>
+      <td class="text-xs-left"><b>{{ props.item.inquiry_title }}</b></td>
+      <td> <v-btn :key="item._id"  v-bind:to= "{name: 'AdminviewInquiry', params: {id: item._id } }" class="green lighten-2 white--text"> View</v-btn></td>
     </template>
   </v-data-table>
   </v-container>
 </template>
 
 <script>
+  import Axios from 'axios'
   export default {
     data () {
       return {
@@ -90,42 +93,18 @@
             text: 'Email ID',
             align: 'left',
             sortable: false,
-            value: 'email_id'
+            value: 'inquiry_email'
           },
-          { text: 'Subject', value: 'inquiry_subject' }
+          { text: 'Date', value: 'inquiry_date' },
+          { text: 'Subject', value: 'inquiry_title' }
         ],
-        items: [
-          {
-            value: false,
-            email_id: 'test1@test.com',
-            inquiry_subject: 'subject 1'
-          },
-          {
-            value: false,
-            email_id: 'test2@test.com',
-            inquiry_subject: 'subject 2'
-          },
-          {
-            value: false,
-            email_id: 'test3@test.com',
-            inquiry_subject: 'subject 3'
-          },
-          {
-            value: false,
-            email_id: 'test4@test.com',
-            inquiry_subject: 'subject 4'
-          },
-          {
-            value: false,
-            email_id: 'test5@test.com',
-            inquiry_subject: 'subject 5'
-          },
-          {
-            value: false,
-            email_id: 'test6@test.com',
-            inquiry_subject: 'subject 6'
-          }
-        ],
+        items: [{
+          value: false,
+          _id: '',
+          inquiry_date: '',
+          inquiry_title: '',
+          inquiry_email: ''
+        }],
         sideNav: false,
         menuItems: [
           {
@@ -152,6 +131,18 @@
         ],
         right: null
       }
+    },
+    created: function () {
+      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/view', {
+        params: {
+        }
+      })
+        .then((response) => {
+          this.items = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 </script>

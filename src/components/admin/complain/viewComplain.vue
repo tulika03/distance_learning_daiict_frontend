@@ -80,11 +80,19 @@
                 <v-flex>
                   <v-card-title primary-title>
                     <div class="text--black">
-                      <div><h3 mp-0> From: {{ items.student_Emailid }} </h3></div><br>
+                      <div><h3 mp-0> From: {{ items.student_id }} </h3></div><br>
+                      <div> Name: <br>
+                        {{ items.student_name }}</div><br>
+                      <div> Email Id: <br>
+                        {{ items.student_email }}</div><br>
+                      <div>Date: <br>
+                        {{ items.complaint_date }}</div><br>
+                      <div> Course ID: <br>
+                        {{ items.FC_id }}</div><br>
                       <div> Subject: <br>
-                        {{ items.complain_subject }}</div><br>
+                        {{ items.complaint_title }}</div><br>
                       <div> Description: <br>
-                        {{ items.complain_description }}</div><br>
+                        {{ items.complaint_description }}</div><br>
 
                     </div>
                   </v-card-title>
@@ -98,17 +106,17 @@
       <v-layout row wrap>
         <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
           <div>
-            <v-card color="grey lighten-4" flat>
+            <v-card color="grey lighten-4" flat @submit.prevent="giveResponse" enctype="multipart/form-data">
               <v-card-text class="white">
                 <v-subheader>Reply</v-subheader>
                 <v-container fluid>
                   <v-layout row>
                     <v-flex xs12>
                       <v-text-field
-                        name="input-1"
+                        name="items.complaint_response"
                         placeholder="reply"
                         textarea
-                        v-model="items.complain_reply"
+                        v-model="items.complaint_response"
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
@@ -128,16 +136,21 @@
 
 
 <script>
-  // import Axios from 'axios'
+  import Axios from 'axios'
   export default {
     data () {
       return {
         sideNav: false,
         items: {
-          Student_EmailId: '',
-          complain_subject: '',
-          complain_description: '',
-          complain_reply: ''
+          _id: '',
+          student_id: '',
+          complaint_date: '',
+          complaint_title: '',
+          FC_id: '',
+          student_name: '',
+          complaint_description: '',
+          student_email: '',
+          complaint_response: ''
         },
         menuItems: [
           {
@@ -164,6 +177,33 @@
         ],
         right: null
       }
+    },
+    methods: {
+      async getDetail () {
+        console.log('view id called')
+        Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/view/' + this.$route.params.id)
+          .then((response) => {
+            console.log(response.data[0])
+            this.items = response.data[0]
+            console.log(this.items)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      giveResponse () {
+        const fd = new FormData()
+        fd.append('complaint_response', this.items.complaint_response)
+        Axios.post('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/respond/' + this.$route.params.id, fd,
+          {headers: { 'Content-type': 'multipart/form-data' }})
+          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+          .catch(error => {
+            console.log(error.response)
+          })
+      }
+    },
+    mounted () {
+      this.getDetail()
     }
   }
 </script>

@@ -57,19 +57,19 @@
     <main>
       <router-view></router-view>
     </main>
-
+  <br>
 
     <v-layout>
       <v-flex>
         <v-btn :to="'/admin/faculty/add/'" class="green white--text right"> ADD FACULTY </v-btn>
       </v-flex>
     </v-layout>
-
+    <br>
   <div>
 
       <v-layout row wrap>
         <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item._id"  v-bind:to= "{name: 'adminview', params: {id: item._id } }" >
+          <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item._id"  >
             <v-container fluid>
               <v-layout row>
                 <v-flex xs5 sm4 md3>
@@ -90,9 +90,24 @@
                   </v-card-title>
 
                   <v-card-actions>
-                    <v-btn flat class="orange darken-3 white--text" v-bind:to= "{name: 'adminupdate', params: {id: item._id }}">Edit</v-btn>
-                    <v-btn flat class="orange darken-3 white--text" @click="deleteData(item._id)">Delete</v-btn>
+                    <v-btn flat class="purple lighten-5 purple--text"  v-bind:to= "{name: 'adminview', params: {id: item._id } }" >View</v-btn>
+                    <v-btn flat class="purple lighten-5 purple--text" v-bind:to= "{name: 'adminupdate', params: {id: item._id }}" align="center">Edit</v-btn>
+                    <v-btn flat class="purple lighten-5 purple--text"  v-on:click.native.stop="dialog = true" >Delete</v-btn>
+                    <v-layout row justify-center>
+                      <v-dialog v-model="dialog" max-width="290">
+                        <v-card>
+                          <v-card-title class="headline">Do you want to delete Faculty Details?</v-card-title>
+                          <v-card-text>If the faculty details are deleted you will not be ableto access it any more. </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Back</v-btn>
+                            <v-btn color="green darken-1" flat="flat" v-on:click.native="deleteData(item._id)">Delete</v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-layout>
                   </v-card-actions>
+
 
                 </v-flex>
               </v-layout>
@@ -110,10 +125,12 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
         sideNav: false,
+        dialog: false,
         items: {
           _id: '',
           faculty_name: '',
@@ -152,22 +169,35 @@
       }
     },
     created: function () {
-      Axios.get('http://192.168.137.1:3000/admin/faculty/view/', {
-        params: {
-        }
-      })
+      console.log(Vue.localStorage.get('token'))
+      var jwt = Vue.localStorage.get('token')
+      if (jwt) {
+        Axios.get('http://192.168.137.1:3000/admin/faculty/view/', {
+          headers: {
+            'Authorization': 'bearer ' + Vue.localStorage.get('token')
+          }
+        })
         .then((response) => {
           this.items = response.data
+          console.log('it works')
         })
         .catch((error) => {
           console.log(error)
         })
+      } else {
+        this.$router.push('/admin/login')
+      }
     },
     methods: {
       deleteData: function (_id) {
-        // var delUrl = this.deleteUrl(_id)
-        // console.log('delete route =[' + delUrl + ']')
-        Axios.delete('http://192.168.137.1:3000/admin/faculty/remove/', {params: { id: this.items._id }})
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        if (jwt) {
+          Axios.delete('http://192.168.137.1:3000/admin/faculty/remove/', {params: { id: this.items._id }}, {
+            headers: {
+              'Authorization': 'bearer ' + Vue.localStorage.get('token')
+            }
+          })
           .then(res => {
             console.log(res)
             console.log('it works')
@@ -175,6 +205,9 @@
           .catch(function (error) {
             console.log(error)
           })
+        } else {
+          this.$router.push('/admin/login')
+        }
       }
     }
   }

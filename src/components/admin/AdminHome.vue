@@ -64,11 +64,11 @@
       </v-flex>
     </v-layout>
     <v-data-table
-      :headers="headers"
-      :items="items"
+      :headers="inquiryheaders"
+      :items="inquiryitems"
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
+      <template slot="inquiryitems" slot-scope="props">
         <td>{{ props.item.email_id }}</td>
         <td class="text-xs-left"><b>{{ props.item.inquiry_subject }}</b></td>
         <td> <v-btn :to="'/admin/inquiry/viewInquiry/'" class="green lighten-2 white--text"> View</v-btn></td>
@@ -83,8 +83,8 @@
       </v-flex>
     </v-layout>
     <v-data-table
-      :headers="headers"
-      :items="items"
+      :headers="complainheaders"
+      :items="complainitems"
       class="elevation-1">
       <template slot="complainitems" slot-scope="props">
         <td>{{ props.item.Student_EmailId }}</td>
@@ -111,7 +111,8 @@
             ]
           },
           {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
-          {title: 'Course',
+          {
+            title: 'Course',
             icon: 'dashboard',
             active: true,
             menuItems: [
@@ -124,12 +125,39 @@
 
         ],
         right: null,
-        complainitems: {
-          Student_EmailId: '',
-          complain_subject: '',
-          complain_description: '',
-          complain_reply: ''
-        }
+        inquiryheaders: [
+          {
+            text: 'Email ID',
+            align: 'left',
+            sortable: false,
+            value: 'inquiry_email'
+          },
+          {text: 'Subject', value: 'inquiry_title'}
+        ],
+        inquiryitems: [
+          {
+            value: false,
+            _id: '',
+            inquiry_title: '',
+            inquiry_email: ''
+          }
+        ],
+        complainheaders: [
+          {
+            text: 'Email ID',
+            align: 'left',
+            sortable: false,
+            value: 'Student_EmailId'
+          },
+          {text: 'Subject', value: 'complain_subject'}
+        ],
+        complainitems: [
+          {
+            value: false,
+            Student_EmailId: 'test1@test.com',
+            complain_subject: 'subject 1'
+          }
+        ]
       }
     }
   }

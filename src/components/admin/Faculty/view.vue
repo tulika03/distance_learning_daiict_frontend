@@ -109,6 +109,7 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
@@ -150,7 +151,15 @@
     methods: {
       async getDetail () {
         console.log('view id called')
-        Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id)
+        var jwt = Vue.localStorage.get('token')
+        console.log('view id called')
+        if (jwt) {
+           Axios.get('http://192.168.137.1:3000/admin/faculty/view/' + this.$route.params.id,
+            {
+           headers: {
+             'Authorization': 'bearer ' + Vue.localStorage.get('token')
+           }
+         })
         .then((response) => {
           console.log(response.data[0])
           this.items = response.data[0]
@@ -158,10 +167,14 @@
         .catch((error) => {
           console.log(error)
         })
+      } else {
+        this.$router.push('/admin/login')
+       }
       }
     },
     mounted () {
       this.getDetail()
     }
   }
+
 </script>

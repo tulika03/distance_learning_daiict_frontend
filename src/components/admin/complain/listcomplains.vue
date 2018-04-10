@@ -64,61 +64,49 @@
       </v-flex>
     </v-layout>
     <v-data-table
-      :headers="headers"
-      :items="items"
+      :headers="complainheaders"
+      :items="complainitems"
+      v-for="item in complainitems"
+      :key="item.student_id"
       class="elevation-1">
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.Student_EmailId }}</td>
-        <td class="text-xs-left" ><b>{{ props.item.complain_subject }}</b></td>
-        <td> <v-btn :to="'/admin/complain/viewComplain/'" class="green lighten-2 white--text"> View</v-btn></td>
+        <td>{{ props.item.complain_date }}</td>
+        <td>{{ props.item.student_id }}</td>
+        <td>{{ props.item.student_name }}</td>
+        <td>{{ props.item.FC_id }}</td>
+        <td class="text-xs-left" ><b>{{ props.item.complaint_title }}</b></td>
+        <td> <v-btn :key="item._id"  v-bind:to= "{name: 'AdminViewComplain', params: {id: item.student_id } }" class="green lighten-2 white--text"> View</v-btn></td>
       </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script>
+  import Axios from 'axios'
   export default {
     data () {
       return {
-        headers: [
+        complainheaders: [
           {
-            text: 'Email ID',
+            text: 'Student ID',
             align: 'left',
             sortable: false,
-            value: 'Student_EmailId'
+            value: 'student_id'
           },
-          { text: 'Subject', value: 'complain_subject' }
+          { text: 'Student Name', value: 'student_name' },
+          { text: 'Date', value: 'complain_date' },
+          { text: 'Faculty Course ID', value: 'FC_id' },
+          { text: 'Subject', value: 'complaint_title' }
         ],
-        items: [
+        complainitems: [
           {
             value: false,
-            Student_EmailId: 'test1@test.com',
-            complain_subject: 'subject 1'
-          },
-          {
-            value: false,
-            Student_EmailId: 'test2@test.com',
-            complain_subject: 'subject 2'
-          },
-          {
-            value: false,
-            Student_EmailId: 'test3@test.com',
-            complain_subject: 'subject 3'
-          },
-          {
-            value: false,
-            Student_EmailId: 'test4@test.com',
-            complain_subject: 'subject 4'
-          },
-          {
-            value: false,
-            Student_EmailId: 'test5@test.com',
-            complain_subject: 'subject 5'
-          },
-          {
-            value: false,
-            Student_EmailId: 'test6@test.com',
-            complain_subject: 'subject 6'
+            _id: '',
+            student_id: '',
+            complain_date: '',
+            complaint_title: '',
+            FC_id: '',
+            student_name: ''
           }
         ],
         sideNav: false,
@@ -147,6 +135,18 @@
         ],
         right: null
       }
+    },
+    created: function () {
+      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/complaints/view', {
+        params: {
+        }
+      })
+        .then((response) => {
+          this.items = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 </script>

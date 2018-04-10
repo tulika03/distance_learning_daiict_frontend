@@ -146,6 +146,8 @@
                   </v-btn>
                 </v-flex>
               </v-layout>
+
+
             </v-form>
           </v-container>
         </v-flex>
@@ -157,6 +159,8 @@
 
 <script>
   import axios from 'axios'
+  import Vue from 'vue'
+
   export default {
     data () {
       return {
@@ -232,9 +236,6 @@
       },
       addFaculty () {
         const fd = new FormData()
-        if (!this.formIsValid) {
-          return
-        }
         fd.append('faculty_photo', this.faculty_photo)
         fd.append('faculty_name', this.faculty_name)
         fd.append('faculty_email', this.faculty_email)
@@ -242,12 +243,23 @@
         fd.append('faculty_contact_number', this.faculty_contact_number)
         fd.append('faculty_educational_details', this.faculty_educational_details)
         fd.append('faculty_area_interest', this.faculty_area_interest)
-        axios.post('http://192.168.137.1:3000/admin/faculty/add', fd,
-          {headers: { 'Content-type': 'multipart/form-data' }})
-  .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
-          .catch(error => {
-            console.log(error.response)
-          })
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        if (jwt) {
+          axios.post('http://192.168.137.1:3000/admin/faculty/add', fd,
+            {
+              headers: {
+                'Content-type': 'multipart/form-data',
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+            .catch(error => {
+              console.log(error.response)
+            })
+        } else {
+          this.$router.push('/admin/login')
+        }
       }
     }
   }

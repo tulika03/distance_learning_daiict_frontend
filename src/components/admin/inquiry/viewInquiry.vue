@@ -77,9 +77,11 @@
                 <v-flex>
                   <v-card-title primary-title>
                     <div class="text--black">
-                      <div><h3 mp-0> From: {{ items.email_id }} </h3></div><br>
+                      <div><h3 mp-0> From: {{ items.inquiry_email }} </h3></div><br>
+                      <div> Date: <br>
+                        {{ items.inquiry_date }}</div><br>
                       <div> Subject: <br>
-                        {{ items.inquiry_subject }}</div><br>
+                        {{ items.inquiry_title }}</div><br>
                       <div> Description: <br>
                         {{ items.inquiry_description }}</div><br>
 
@@ -95,17 +97,17 @@
       <v-layout row wrap>
         <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
           <div>
-            <v-card color="grey lighten-4" flat>
+            <v-card color="grey lighten-4" flat @submit.prevent="giveResponse" enctype="multipart/form-data">
               <v-card-text class="white">
                 <v-subheader>Reply</v-subheader>
                 <v-container fluid>
                   <v-layout row>
                     <v-flex xs12>
                       <v-text-field
-                        name="input-1"
+                        name="items.inquiry_response"
                         placeholder="reply"
                         textarea
-                        v-model="items.inquiry_reply"
+                        v-model="items.inquiry_response"
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
@@ -126,16 +128,18 @@
 
 
 <script>
- // import Axios from 'axios'
+  import Axios from 'axios'
   export default {
     data () {
       return {
         sideNav: false,
         items: {
-          email_id: '',
-          inquiry_subject: '',
+          _id: '',
+          inquiry_date: '',
+          inquiry_title: '',
+          inquiry_email: '',
           inquiry_description: '',
-          inquiry_reply: ''
+          inquiry_response: ''
         },
         menusideNav: false,
         menuItems: [
@@ -163,6 +167,33 @@
         ],
         right: null
       }
+    },
+    methods: {
+      async getDetail () {
+        console.log('view id called')
+        Axios.get('http://192.168.137.1:3000/admin/inquiries/view/' + this.$route.params.id)
+          .then((response) => {
+            console.log(response.data[0])
+            this.items = response.data[0]
+            console.log(this.items)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      giveResponse () {
+        const fd = new FormData()
+        fd.append('inquiry_response', this.items.inquiry_response)
+        Axios.post('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
+          {headers: { 'Content-type': 'multipart/form-data' }})
+          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+          .catch(error => {
+            console.log(error.response)
+          })
+      }
+    },
+    mounted () {
+      this.getDetail()
     }
   }
 </script>

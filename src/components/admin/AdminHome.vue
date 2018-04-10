@@ -1,6 +1,6 @@
 <template>
   <v-container fluid="true">
-
+    <navMenu></navMenu>
     <main>
       <router-view></router-view>
     </main>
@@ -44,10 +44,10 @@
 </template>
 
 <script>
- import NavMenu from '@/components/admin/menu'
+ import Menu from '@/components/admin/menu'
  export default {
    name: 'app',
-   components: {NavMenu},
+   components: {'navMenu': Menu},
    data () {
      return {
        right: null,

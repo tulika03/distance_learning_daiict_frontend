@@ -141,11 +141,11 @@
       console.log(Vue.localStorage.get('token'))
       var jwt = Vue.localStorage.get('token')
       if (jwt) {
-        Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/complaints/view', {
+        Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/complaints/view',  {
           headers: {
             'Authorization': 'bearer ' + Vue.localStorage.get('token')
-          }
-        })
+         }
+      })
         .then((response) => {
           this.items = response.data
         })

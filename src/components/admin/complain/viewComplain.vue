@@ -181,7 +181,7 @@
       }
     },
     methods: {
-      async getDetail () {
+      async getDetail() {
         console.log('view id called')
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
@@ -211,7 +211,7 @@
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
         if (jwt) {
-          Axios.patch('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
+          Axios.post('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
             {
               headers: {
                 'Content-type': 'multipart/form-data',
@@ -225,8 +225,9 @@
         } else {
           this.$router.push('/admin/login')
         }
+
       },
-      mounted () {
+      mounted() {
         this.getDetail()
       }
     }

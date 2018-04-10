@@ -193,7 +193,7 @@
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
         if (jwt) {
-          Axios.delete('http://192.168.137.1:3000/admin/faculty/remove/', {params: { id: this.items._id }}, {
+          Axios.delete('http://192.168.137.1:3000/admin/faculty/remove/' + _id, {
             headers: {
               'Authorization': 'bearer ' + Vue.localStorage.get('token')
             }

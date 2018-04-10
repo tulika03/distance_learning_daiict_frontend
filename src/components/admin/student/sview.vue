@@ -102,12 +102,12 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
+
   export default {
     data () {
       return {
         headers: [
-          {
-            text: 'Student ID', align: 'left', sortable: true, value: 'Student_Id'},
           { text: 'Student Name', value: 'student_name' },
           { text: 'Work Experience', value: 'student_experience' },
           { text: 'Email Id', value: 'student_email' },
@@ -156,16 +156,24 @@
       }
     },
     created: function () {
-      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/students/view', {
-        params: {
-        }
-      })
+      console.log(Vue.localStorage.get('token'))
+      var jwt = Vue.localStorage.get('token')
+      if (jwt) {
+        Axios.get('http://192.168.137.1:3000/admin/student/view', {
+          headers: {
+            'Authorization': 'bearer ' + Vue.localStorage.get('token')
+          }
+        })
         .then((response) => {
           this.items = response.data
+          console.log('It works')
         })
         .catch((error) => {
           console.log(error)
         })
+      } else {
+        this.$router.push('/admin/login')
+      }
     }
   }
 </script>

@@ -85,6 +85,7 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
@@ -133,16 +134,24 @@
       }
     },
     created: function () {
-      Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/view', {
-        params: {
-        }
-      })
-        .then((response) => {
-          this.items = response.data
+      console.log(Vue.localStorage.get('token'))
+      var jwt = Vue.localStorage.get('token')
+      if (jwt) {
+        Axios.get('http://192.168.137.1:3000/admin/inquiry/view', {
+          headers: {
+            'Authorization': 'bearer ' + Vue.localStorage.get('token')
+          }
         })
-        .catch((error) => {
-          console.log(error)
-        })
+          .then((response) => {
+            this.items = response.data
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        this.$router.push('/admin/login')
+      }
     }
   }
 </script>

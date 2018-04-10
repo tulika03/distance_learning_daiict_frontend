@@ -137,6 +137,7 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
@@ -163,7 +164,8 @@
             ]
           },
           {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
-          {title: 'Course',
+          {
+            title: 'Course',
             icon: 'dashboard',
             active: true,
             menuItems: [
@@ -181,29 +183,52 @@
     methods: {
       async getDetail () {
         console.log('view id called')
-        Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/view/' + this.$route.params.id)
-          .then((response) => {
-            console.log(response.data[0])
-            this.items = response.data[0]
-            console.log(this.items)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        console.log('view id called')
+        if (jwt) {
+          Axios.get('http://192.168.137.1:3000/admin/inquiries/view/' + this.$route.params.id,
+            {
+              headers: {
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then((response) => {
+              console.log(response.data[0])
+              this.items = response.data[0]
+              console.log(this.items)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        } else {
+          this.$router.push('/admin/login')
+        }
       },
       giveResponse () {
         const fd = new FormData()
         fd.append('complaint_response', this.items.complaint_response)
-        Axios.post('https://sheltered-spire-10162.herokuapp.com/admin/inquiries/respond/' + this.$route.params.id, fd,
-          {headers: { 'Content-type': 'multipart/form-data' }})
-          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
-          .catch(error => {
-            console.log(error.response)
-          })
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        if (jwt) {
+          Axios.patch('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
+            {
+              headers: {
+                'Content-type': 'multipart/form-data',
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+            .catch(error => {
+              console.log(error.response)
+            })
+        } else {
+          this.$router.push('/admin/login')
+        }
+      },
+      mounted () {
+        this.getDetail()
       }
-    },
-    mounted () {
-      this.getDetail()
     }
   }
 </script>

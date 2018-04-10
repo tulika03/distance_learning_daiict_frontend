@@ -17,7 +17,7 @@
           </v-toolbar>
           <v-layout>
             <v-flex>
-              <v-card>
+              <v-card >
                 <v-list class="pt-0" dense>
                   <v-list-group
                     v-model="item.active"
@@ -71,11 +71,10 @@
       <v-layout row wrap>
         <v-flex xs12 sm5 offset-sm3>
           <v-card class="light-blue lighten-4 mb-4" v-for="item in items" :key="item._id">
-            <v-container fluid style="min-height: 0;"
+            <v-container fluid
                          grid-list-lg>
               <v-card-title primary-title>
                 <div>
-                  <div><h3 class="Grey--text darken-1" mp-0>{{ item.course_id }} </h3></div>
                   <div> Course Subject: {{ item.course_subject }}</div>
                 </div>
               </v-card-title>
@@ -102,13 +101,13 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
         sideNav: false,
         items: {
           _id: '',
-          course_id: '',
           course_subject: ''
         },
         menuItems: [
@@ -139,20 +138,35 @@
       }
     },
     created: function () {
-      Axios.get('http://192.168.137.1:3000/admin/courses/view', {
-        params: {
-        }
-      })
-        .then((response) => {
-          this.items = response.data
+      console.log(Vue.localStorage.get('token'))
+      var jwt = Vue.localStorage.get('token')
+      if (jwt) {
+        Axios.get('http://192.168.137.1:3000/admin/course/view', {
+          headers: {
+            'Authorization': 'bearer ' + Vue.localStorage.get('token')
+          }
         })
-        .catch((error) => {
-          console.log(error)
-        })
+          .then((response) => {
+            this.items = response.data
+            console.log('it works')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        this.$router.push('/admin/login')
+      }
     },
     methods: {
       deleteData: function (_id) {
-        Axios.delete('http://192.168.137.1:3000/admin/courses/remove/', {params: { id: this.items._id }})
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        if (jwt) {
+          Axios.delete('http://192.168.137.1:3000/admin/course/remove/' + _id, {
+            headers: {
+              'Authorization': 'bearer ' + Vue.localStorage.get('token')
+            }
+          })
           .then(res => {
             console.log(res)
             console.log('it works')
@@ -160,6 +174,10 @@
           .catch(function (error) {
             console.log(error)
           })
+          this.$router.push('/admin/course/remove/')
+        } else {
+          this.$router.push('/admin/login')
+        }
       }
     }
   }

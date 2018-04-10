@@ -91,8 +91,6 @@
           <td class="text-xs-right">{{ props.item.student_education_level }}</td>
           <td class="text-xs-right">{{ props.item.student_experience }}</td>
           <td class="text-xs-right">{{ props.item.student_address }}</td>
-          <td class="text-xs-right" :src="item.student_photo"
-              height="150px" width="150px">{{ props.item.student_photo }}</td>
         </template>
       </v-data-table>
     </v-flex>
@@ -113,15 +111,13 @@
           { text: 'Email Id', value: 'student_email' },
           { text: 'Contact Number', value: 'student_contact_number' },
           {text: 'Educational Qualification', value: 'student_education_level'},
-          { text: 'Address', value: 'student_address' },
-          { text: 'Photo', value: 'student_photo' }
+          { text: 'Address', value: 'student_address' }
         ],
         items: [
           {
             value: false,
             _id: '',
             student_name: '',
-            student_photo: '',
             student_experience: '',
             student_education_level: '',
             student_email: '',

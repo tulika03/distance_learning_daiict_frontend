@@ -71,7 +71,7 @@
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
-            <v-form @submit.prevent="addFaculty" enctype="multipart/form-data">
+            <v-form @submit.prevent="" enctype="multipart/form-data">
 
                   <v-text-field
                     label="Name"
@@ -141,7 +141,7 @@
                   <v-btn flat class="orange"
                          :disabled="!formIsValid"
                          type="submit"
-                         @click="addFaculty"
+                         @click="{addFaculty, clear}"
                   >Add
                   </v-btn>
                 </v-flex>
@@ -257,9 +257,14 @@
             .catch(error => {
               console.log(error.response)
             })
+          this.$router.push('/admin/Faculty/viewFaculty/')
+         // this.$refs.form.reset()
         } else {
           this.$router.push('/admin/login')
         }
+      },
+      clear () {
+        this.$refs.form.reset()
       }
     }
   }

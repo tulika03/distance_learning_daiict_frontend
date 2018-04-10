@@ -92,23 +92,8 @@
                   <v-card-actions>
                     <v-btn flat class="purple lighten-5 purple--text"  v-bind:to= "{name: 'adminview', params: {id: item._id } }" >View</v-btn>
                     <v-btn flat class="purple lighten-5 purple--text" v-bind:to= "{name: 'adminupdate', params: {id: item._id }}" align="center">Edit</v-btn>
-                    <v-btn flat class="purple lighten-5 purple--text"  v-on:click.native.stop="dialog = true" >Delete</v-btn>
-                    <v-layout row justify-center>
-                      <v-dialog v-model="dialog" max-width="290">
-                        <v-card>
-                          <v-card-title class="headline">Do you want to delete Faculty Details?</v-card-title>
-                          <v-card-text>If the faculty details are deleted you will not be ableto access it any more. </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Back</v-btn>
-                            <v-btn color="green darken-1" flat="flat" v-on:click.native="deleteData(item._id)">Delete</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-layout>
+                    <v-btn flat class="purple lighten-5 purple--text"   @click="deleteData(item._id)">Delete</v-btn>
                   </v-card-actions>
-
-
                 </v-flex>
               </v-layout>
             </v-container>
@@ -164,7 +149,7 @@
 
         ],
 
-        deleteUrl: function (id) { return this.path + id },
+        // deleteUrl: function (id) { return this.path + id },
         right: null
       }
     },
@@ -205,6 +190,7 @@
           .catch(function (error) {
             console.log(error)
           })
+          this.$router.push('/admin/Faculty/viewFaculty')
         } else {
           this.$router.push('/admin/login')
         }

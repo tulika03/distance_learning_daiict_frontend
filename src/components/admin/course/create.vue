@@ -72,14 +72,8 @@
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
-            <v-form>
+            <v-form enctype="multipart/form-data" @submit.prevent="">
               <v-text-field
-                label="Course Id"
-                v-model="course_id"
-                name="course_id"
-                required
-              ></v-text-field>
-                            <v-text-field
                 label="Course Name"
                 name="course_subject"
                 v-model="course_subject"
@@ -105,10 +99,10 @@
 
 <script>
   import axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
-        course_id: '',
         course_subject: '',
         sideNav: false,
         menuItems: [
@@ -122,7 +116,8 @@
             ]
           },
           {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
-          {title: 'Course',
+          {
+            title: 'Course',
             icon: 'dashboard',
             active: true,
             menuItems: [
@@ -140,28 +135,31 @@
 
     computed: {
       formIsValid () {
-        return this.Course_Id !== '' &&
-          this.Course_Subject !== ''
+        return this.course_subject !== ''
       }
     },
     methods: {
       addCourses () {
-        const fd = new FormData()
-        if (!this.formIsValid) {
-          return
-        }
-        fd.append('course_id', this.course_id)
-        fd.append('course_subject', this.course_subject)
+       // const fd = new FormData()
+       // fd.append('course_subject', this.course_subject)
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
         if (jwt) {
-        axios.post('https://sheltered-spire-10162.herokuapp.com/admin/courses/add', fd,
-          {headers: { 'Content-type': 'multipart/form-data',
-              'Authorization': 'bearer ' + Vue.localStorage.get('token')}})
-          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
-          .catch(error => {
-            console.log(error.response)
-          })
+          console.log(this.course_subject)
+          axios.post('http://192.168.137.1:3000/admin/course/add', {
+            'course_subject': this.course_subject
+          },
+            {
+              headers: {
+               // 'Content-type': 'multipart/form-data',
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
+            .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+            .catch(error => {
+              console.log(error.response)
+            })
+        }
       }
     }
   }

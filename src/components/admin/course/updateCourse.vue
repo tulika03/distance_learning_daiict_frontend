@@ -60,7 +60,7 @@
     <v-layout>
       <v-flex>
 
-        <v-card  @submit.prevent="updateCourse" enctype="multipart/form-data">
+        <v-card  @submit.prevent="" enctype="multipart/form-data">
           <v-container>
             <v-layout row wrap>
               <v-flex xs12>
@@ -73,16 +73,6 @@
 
             <v-layout row wrap class="">
               <v-flex xs12>
-
-                <v-card-text>
-                  <v-text-field
-                    label="Course ID"
-                    name="items.course_id"
-                    v-model="items.course_id"
-                    required
-                  >{{ items.course_id }}</v-text-field>
-                </v-card-text>
-
 
 
                 <v-card-text>
@@ -110,12 +100,12 @@
 
 <script>
   import Axios from 'axios'
+  import Vue from 'vue'
   export default {
     data () {
       return {
         items: {
           _id: '',
-          course_id: '',
           course_subject: ''
         },
         sideNav: false,
@@ -148,8 +138,16 @@
     },
     methods: {
       async getDetail () {
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
         console.log('view id called')
-        Axios.get('https://sheltered-spire-10162.herokuapp.com/admin/courses/update' + this.$route.params.id)
+        if (jwt) {
+          Axios.get('http://192.168.137.1:3000/admin/course/view/' + this.$route.params.id,
+            {
+              headers: {
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
           .then((response) => {
             console.log(response.data[0])
             this.items = response.data[0]
@@ -158,17 +156,33 @@
           .catch((error) => {
             console.log(error)
           })
+        } else {
+          this.$router.push('/admin/login')
+        }
       },
       updateCourse () {
-        const fd = new FormData()
-        fd.append('course_id', this.course_id)
-        fd.append('course_subject', this.items.course_subject)
-        Axios.patch('https://sheltered-spire-10162.herokuapp.com/admin/courses/update/' + this.$route.params.id, fd,
-          {headers: { 'Content-type': 'multipart/form-data' }})
+      //  const fd = new FormData()
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        console.log('view id called')
+        if (jwt) {
+        //  fd.append('course_subject', this.course_subject)
+          Axios.patch('http://192.168.137.1:3000/admin/course/update/' + this.$route.params.id, {
+            'course_subject': this.items.course_subject
+          },
+            {
+              headers: {
+              //  'Content-type': 'multipart/form-data',
+                'Authorization': 'bearer ' + Vue.localStorage.get('token')
+              }
+            })
           .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
           .catch(error => {
             console.log(error.response)
           })
+        } else {
+          this.$router.push('/admin/login')
+        }
       }
     },
     mounted () {

@@ -1,9 +1,6 @@
 <template>
   <v-container fluid="true">
     <navMenu></navMenu>
-    <main>
-      <router-view></router-view>
-    </main>
       <br>
     <v-layout>
       <v-flex>

@@ -20,8 +20,8 @@ export default new Router({
   routes: [
     {
       path: '/admin/',
-      name: 'adminHome',
-      component: adminHome
+      name: 'AdminLogin',
+      component: AdminLogin
     },
     {
       path: '/admin/Faculty/viewFaculty',
@@ -84,9 +84,9 @@ export default new Router({
       component: AdminviewInquiry
     },
     {
-      path: '/admin/login',
-      name: 'AdminLogin',
-      component: AdminLogin
+      path: '/admin/AdminHome',
+      name: 'adminHome',
+      component: adminHome
     }
   ],
   mode: 'history'

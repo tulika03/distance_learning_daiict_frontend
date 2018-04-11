@@ -86,7 +86,7 @@
                   <v-btn flat class="orange"
                          :disabled="!formIsValid"
                          type="submit"
-                         @click="{addFaculty, clear}"
+                         @click="addFaculty"
                   >Add
                   </v-btn>
                 </v-flex>
@@ -181,8 +181,7 @@
             .catch(error => {
               console.log(error.response)
             })
-          this.$router.push('/admin/Faculty/viewFaculty/')
-         // this.$refs.form.reset()
+                 // this.$refs.form.reset()
         } else {
           this.$router.push('/admin/login')
         }

@@ -54,7 +54,7 @@
           console.log('Error login')
           console.log(error)
         })
-        this.$router.push('/admin/')
+        this.$router.push('/admin/AdminHome')
       }
     }
   }

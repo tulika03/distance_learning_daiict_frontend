@@ -47,14 +47,21 @@
 
         </v-navigation-drawer>
 
-        <v-toolbar class="primary">
+        <v-toolbar class="primary" fixed>
           <v-toolbar-side-icon @click.stop="sideNav=!sideNav" />
           <v-toolbar-title class="white--text">
             <router-link to="/" tag="span" style="cursor: pointer">Distance learning </router-link></v-toolbar-title>
           <v-spacer> </v-spacer>
+          <v-btn class="orange lighten-2 white--text">LOGOUT</v-btn>
         </v-toolbar>
+        <br>
+        <br>
+        <br>
+        <br>
+        <v-spacer></v-spacer>
       </v-flex>
     </v-layout>
+
 </template>
 
 <script>

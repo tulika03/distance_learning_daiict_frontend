@@ -20,7 +20,12 @@
                          grid-list-lg>
               <v-card-title primary-title>
                 <div>
-                  <div> Course Subject: {{ item.course_subject }}</div>
+                  <v-card-media
+                    :src="item.course_photo"
+                    height="150px" width="150px">
+                  </v-card-media>
+                  <div> <b>Course Subject: </b>{{ item.course_subject }}</div>
+                  <div> <b>Course Description:</b> {{ item.course_description }}</div>
                 </div>
               </v-card-title>
 
@@ -56,7 +61,9 @@
         sideNav: false,
         items: {
           _id: '',
-          course_subject: ''
+          course_photo: '',
+          course_subject: '',
+          course_description: ''
         },
         right: null
 

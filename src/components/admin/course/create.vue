@@ -19,11 +19,29 @@
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
             <v-form enctype="multipart/form-data" @submit.prevent="">
+
+              <label>Upload Image*</label>    <br><br>
+              <div>
+                <input type=file
+                       @change="onFileSelected"
+                       class="text--primary" required
+                       accept="image/*"
+                >
+              </div >
+
               <v-text-field
                 label="Course Name"
                 name="course_subject"
                 v-model="course_subject"
                 required></v-text-field>
+
+              <v-text-field
+                label="Course Description"
+                name="course_description"
+                v-model="course_description"
+                required></v-text-field>
+
+
               <v-layout row>
                 <v-flex xs12 sm6>
                   <v-btn flat class="indigo"
@@ -52,7 +70,9 @@
     components: {'navMenu': Menu},
     data () {
       return {
+        course_photo: '',
         course_subject: '',
+        course_description: '',
         right: null
       }
     },
@@ -63,19 +83,23 @@
       }
     },
     methods: {
+      onFileSelected (event) {
+        this.course_photo = event.target.files[0]
+        console.log(this.faculty_photo)
+      },
       addCourses () {
-       // const fd = new FormData()
-       // fd.append('course_subject', this.course_subject)
+        const fd = new FormData()
+        fd.append('course_photo', this.course_photo)
+        fd.append('course_subject', this.course_subject)
+        fd.append('course_description', this.course_description)
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
         if (jwt) {
           console.log(this.course_subject)
-          axios.post('http://192.168.137.1:3000/admin/course/add', {
-            'course_subject': this.course_subject
-          },
+          axios.post('http://192.168.137.1:3000/admin/course/add', fd,
             {
               headers: {
-               // 'Content-type': 'multipart/form-data',
+                'Content-type': 'multipart/form-data',
                 'Authorization': 'bearer ' + Vue.localStorage.get('token')
               }
             })

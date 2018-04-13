@@ -14,6 +14,14 @@ import AdminViewComplain from '@/components/admin/complain/viewComplain'
 import AdminListInquiries from '@/components/admin/inquiry/showInquiries'
 import AdminviewInquiry from '@/components/admin/inquiry/viewInquiry'
 import AdminLogin from '@/components/admin/login'
+import StudentSignUp from '@/components/student/StudentSignup'
+import StudentLogin from '@/components/student/StudentLogin'
+import EditProfile from '@/components/student/profile'
+import StudentFacultyCourse from '@/components/student/facultycourse'
+import Studentsubtopic from '@/components/student/subtopic'
+import Studentstudy from '@/components/student/study'
+import Studforgot from '@/components/student/studforgot'
+// import StudHome from '@/components/student/home'
 Vue.use(Router)
 
 export default new Router({
@@ -87,7 +95,47 @@ export default new Router({
       path: '/admin/AdminHome',
       name: 'adminHome',
       component: adminHome
+    },
+    {
+      path: '/student/add',
+      name: 'StudnetSignUp',
+      component: StudentSignUp
+    },
+    {
+      path: '/student/login',
+      name: 'StudnetLogin',
+      component: StudentLogin
+    },
+    {
+      path: '/student/EditProfile/:id',
+      name: 'EditProfile',
+      component: EditProfile
+    },
+    {
+      path: '/student/faculty',
+      name: 'StudentFacultyCourse',
+      component: StudentFacultyCourse
+    },
+    {
+      path: '/student/subtopic',
+      name: 'Studentsubtopic',
+      component: Studentsubtopic
+    },
+    {
+      path: '/student/study',
+      name: 'Studentstudy',
+      component: Studentstudy
+    },
+    {
+      path: '/student/forgotpassword',
+      name: 'Studforgot',
+      component: Studforgot
     }
+ /*   {
+      path: '/student/home',
+      name: 'StudHomeHome',
+      component: StudHome
+    } */
   ],
   mode: 'history'
 })

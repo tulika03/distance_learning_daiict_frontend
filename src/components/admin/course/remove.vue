@@ -18,16 +18,19 @@
           <v-card class="light-blue lighten-4 mb-4" v-for="item in items" :key="item._id">
             <v-container fluid
                          grid-list-lg>
-              <v-card-title primary-title>
-                <div>
-                  <v-card-media
-                    :src="item.course_photo"
-                    height="150px" width="150px">
-                  </v-card-media>
-                  <div> <b>Course Subject: </b>{{ item.course_subject }}</div>
-                  <div> <b>Course Description:</b> {{ item.course_description }}</div>
-                </div>
-              </v-card-title>
+              <v-card-media
+                :src="item.course_photo"
+                height="150px" width="150px">
+              </v-card-media>
+
+        <v-flex>
+          <v-card-title primary-title>
+            <div class="text--black">
+              <div><h3 mp-0> {{ item.course_subject }} </h3></div>
+              <div> {{ item.course_description }}</div><br>
+
+            </div>
+          </v-card-title>
 
               <v-card-actions>
                 <v-btn flat class="green white--text" v-bind:to= "{name: 'adminUpdateCourse', params: {id: item._id }}">Edit</v-btn>
@@ -35,7 +38,7 @@
               </v-card-actions>
 
 
-
+</v-flex>
             </v-container>
 
           </v-card>
@@ -80,7 +83,7 @@
         })
           .then((response) => {
             this.items = response.data
-            console.log('it works')
+            console.log(response.data)
           })
           .catch((error) => {
             console.log(error)

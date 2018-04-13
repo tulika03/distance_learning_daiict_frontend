@@ -85,7 +85,7 @@
     methods: {
       onFileSelected (event) {
         this.course_photo = event.target.files[0]
-        console.log(this.faculty_photo)
+        console.log(this.course_photo)
       },
       addCourses () {
         const fd = new FormData()

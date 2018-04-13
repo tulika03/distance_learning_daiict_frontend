@@ -21,6 +21,7 @@ import StudentFacultyCourse from '@/components/student/facultycourse'
 import Studentsubtopic from '@/components/student/subtopic'
 import Studentstudy from '@/components/student/study'
 import Studforgot from '@/components/student/studforgot'
+import Studreset from '@/components/student/student_reset'
 // import StudHome from '@/components/student/home'
 Vue.use(Router)
 
@@ -130,6 +131,11 @@ export default new Router({
       path: '/student/forgotpassword',
       name: 'Studforgot',
       component: Studforgot
+    },
+    {
+      path: '/student/reset',
+      name: 'Studreset',
+      component: Studreset
     }
  /*   {
       path: '/student/home',

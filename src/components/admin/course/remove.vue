@@ -15,18 +15,18 @@
 
       <v-layout row wrap>
         <v-flex xs12 sm5 offset-sm3>
-          <v-card class="light-blue lighten-4 mb-4" v-for="item in items" :key="item._id">
+          <v-card class="light-blue lighten-5 mb-4" v-for="item in items" :key="item._id">
             <v-container fluid
                          grid-list-lg>
               <v-card-media
                 :src="item.course_photo"
-                height="150px" width="150px">
+                height="190px" width="150px">
               </v-card-media>
 
         <v-flex>
           <v-card-title primary-title>
             <div class="text--black">
-              <div><h3 mp-0> {{ item.course_subject }} </h3></div>
+              <div><h3 class="blue--text darken-4" mp-0> {{ item.course_subject }} </h3></div>
               <div> {{ item.course_description }}</div><br>
 
             </div>
@@ -37,8 +37,8 @@
                 <v-btn flat class="green white--text" @click="deleteData(item._id)"> Delete</v-btn>
               </v-card-actions>
 
+        </v-flex>
 
-</v-flex>
             </v-container>
 
           </v-card>
@@ -83,7 +83,7 @@
         })
           .then((response) => {
             this.items = response.data
-            console.log(response.data)
+            console.log('it works')
           })
           .catch((error) => {
             console.log(error)

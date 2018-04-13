@@ -23,7 +23,7 @@
                 <v-btn color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
-            <!--<v-label><a href="    " >forgot password</a></v-label>-->
+            <v-label><a href="/student/forgotpassword  " >forgot password</a></v-label>
           </v-flex>
         </v-layout>
       </v-container>

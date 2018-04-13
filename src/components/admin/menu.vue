@@ -52,7 +52,7 @@
           <v-toolbar-title class="white--text">
             <router-link to="/" tag="span" style="cursor: pointer">Distance learning </router-link></v-toolbar-title>
           <v-spacer> </v-spacer>
-          <v-btn class="orange lighten-2 white--text">LOGOUT</v-btn>
+          <v-btn class="purple lighten-4 black--text" :to="'/admin/'">LOGOUT</v-btn>
         </v-toolbar>
         <br>
         <br>

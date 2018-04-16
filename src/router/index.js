@@ -17,11 +17,18 @@ import AdminLogin from '@/components/admin/login'
 import StudentSignUp from '@/components/student/StudentSignup'
 import StudentLogin from '@/components/student/StudentLogin'
 import EditProfile from '@/components/student/profile'
-import StudentFacultyCourse from '@/components/student/facultycourse'
+import StudentFacultyCourse from '@/components/student/facultycourse/'
 import Studentsubtopic from '@/components/student/subtopic'
 import Studentstudy from '@/components/student/study'
 import Studforgot from '@/components/student/studforgot'
 import Studreset from '@/components/student/student_reset'
+import StudComplain from '@/components/student/complain'
+import studentHome from '@/components/student/home'
+import StudInquiry from '@/components/student/inquiry'
+import Studfeedback from '@/components/student/studentfeedback'
+import MyCourses from '@/components/student/MyCourse'
+// import Exam from '@/components/student/exam'
+
 // import StudHome from '@/components/student/home'
 Vue.use(Router)
 
@@ -113,17 +120,17 @@ export default new Router({
       component: EditProfile
     },
     {
-      path: '/student/faculty',
+      path: '/student/faculty/:id',
       name: 'StudentFacultyCourse',
       component: StudentFacultyCourse
     },
     {
-      path: '/student/subtopic',
+      path: '/student/subtopic/:id',
       name: 'Studentsubtopic',
       component: Studentsubtopic
     },
     {
-      path: '/student/study',
+      path: '/student/study/:id',
       name: 'Studentstudy',
       component: Studentstudy
     },
@@ -133,14 +140,39 @@ export default new Router({
       component: Studforgot
     },
     {
+      path: '/student/complains/:id',
+      name: 'StudComplain',
+      component: StudComplain
+    },
+    {
       path: '/student/reset',
       name: 'Studreset',
       component: Studreset
+    },
+    {
+      path: '/',
+      name: 'studentHome',
+      component: studentHome
+    },
+    {
+      path: '/student/inquiry',
+      name: 'StudInquiry',
+      component: StudInquiry
+    },
+    {
+      path: '/student/feedback/:id',
+      name: 'Studfeedback',
+      component: Studfeedback
+    },
+    {
+      path: '/student/Mycourse',
+      name: 'MyCourses',
+      component: MyCourses
     }
  /*   {
-      path: '/student/home',
-      name: 'StudHomeHome',
-      component: StudHome
+      path: '/student/exam',
+      name: 'Exam',
+      component: Exam
     } */
   ],
   mode: 'history'

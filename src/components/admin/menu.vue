@@ -6,7 +6,7 @@
             <v-list class="pa-0 ">
               <v-list-tile avatar>
                 <v-list-tile-avatar>
-                  <img src=" " >
+                  <img src="" >
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>Profile</v-list-tile-title>
@@ -52,7 +52,7 @@
           <v-toolbar-title class="white--text">
             <router-link to="/" tag="span" style="cursor: pointer">Distance learning </router-link></v-toolbar-title>
           <v-spacer> </v-spacer>
-          <v-btn class="purple lighten-4 black--text" :to="'/admin/'">LOGOUT</v-btn>
+          <v-btn class="purple lighten-4 black--text" @click="logout">LOGOUT</v-btn>
         </v-toolbar>
         <br>
         <br>
@@ -93,6 +93,13 @@
           {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
 
         ]
+      }
+    },
+    methods: {
+      logout: function () {
+        localStorage.removeItem('token')
+        console.log('token deleted')
+        this.$router.push('/admin/')
       }
     }
   }

@@ -89,7 +89,7 @@
             console.log(error)
           })
       } else {
-        this.$router.push('/admin/login')
+        this.$router.push('/admin/')
       }
     },
     methods: {
@@ -111,7 +111,7 @@
           })
           this.$router.push('/admin/course/remove/')
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       }
     }

@@ -159,17 +159,17 @@
         console.log(this.faculty_photo)
       },
       addFaculty () {
-        const fd = new FormData()
-        fd.append('faculty_photo', this.faculty_photo)
-        fd.append('faculty_name', this.faculty_name)
-        fd.append('faculty_email', this.faculty_email)
-        fd.append('faculty_password', this.faculty_password)
-        fd.append('faculty_contact_number', this.faculty_contact_number)
-        fd.append('faculty_educational_details', this.faculty_educational_details)
-        fd.append('faculty_area_interest', this.faculty_area_interest)
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
         if (jwt) {
+          const fd = new FormData()
+          fd.append('faculty_photo', this.faculty_photo)
+          fd.append('faculty_name', this.faculty_name)
+          fd.append('faculty_email', this.faculty_email)
+          fd.append('faculty_password', this.faculty_password)
+          fd.append('faculty_contact_number', this.faculty_contact_number)
+          fd.append('faculty_educational_details', this.faculty_educational_details)
+          fd.append('faculty_area_interest', this.faculty_area_interest)
           axios.post('http://192.168.137.1:3000/admin/faculty/add', fd,
             {
               headers: {
@@ -181,13 +181,10 @@
             .catch(error => {
               console.log(error.response)
             })
-                 // this.$refs.form.reset()
+          window.alert('data inserted successfully.')
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
-      },
-      clear () {
-        this.$refs.form.reset()
       }
     }
   }

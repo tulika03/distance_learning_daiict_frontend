@@ -107,6 +107,8 @@
             .catch(error => {
               console.log(error.response)
             })
+        } else {
+          this.$router.push('/admin/')
         }
       }
     }

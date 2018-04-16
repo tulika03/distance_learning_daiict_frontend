@@ -1,7 +1,9 @@
 <template>
-  <v-app id="inspire">
+  <v-container>
+  <nav-Menu></nav-Menu>
     <v-content>
       <v-container fluid fill-height>
+
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
@@ -20,22 +22,25 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="signup">Signup</v-btn>
+                <v-btn color="primary" @click="signup" :to="'/student/login'">Signup</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
-  </v-app>
+  </v-container>
 </template>
 
 <script>
   import Axios from 'axios'
   import Vue from 'vue'
+  import menuuu from '@/components/student/menuu'
   import VueLocalStorage from 'vue-localstorage'
   Vue.use(VueLocalStorage)
   export default {
+    name: 'app',
+    components: {'nav-Menu': menuuu},
     data () {
       return {
         student_name: '',

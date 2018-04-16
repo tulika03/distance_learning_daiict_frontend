@@ -92,7 +92,7 @@
           console.log(error)
         })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       }
     },

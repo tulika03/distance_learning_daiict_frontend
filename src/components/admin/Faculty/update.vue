@@ -134,20 +134,20 @@
               console.log(error)
             })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       },
       updateFaculty () {
-        const fd = new FormData()
-        fd.append('faculty_photo', this.faculty_photo)
-        fd.append('faculty_name', this.items.faculty_name)
-        fd.append('faculty_email', this.items.faculty_email)
-        fd.append('faculty_contact_number', this.items.faculty_contact_number)
-        fd.append('faculty_educational_details', this.items.faculty_educational_details)
-        fd.append('faculty_area_interest', this.items.faculty_area_interest)
         var jwt = Vue.localStorage.get('token')
         console.log('view id called')
         if (jwt) {
+          const fd = new FormData()
+          fd.append('faculty_photo', this.faculty_photo)
+          fd.append('faculty_name', this.items.faculty_name)
+          fd.append('faculty_email', this.items.faculty_email)
+          fd.append('faculty_contact_number', this.items.faculty_contact_number)
+          fd.append('faculty_educational_details', this.items.faculty_educational_details)
+          fd.append('faculty_area_interest', this.items.faculty_area_interest)
           Axios.patch('http://192.168.137.1:3000/admin/faculty/update/' + this.$route.params.id, fd,
             {
               headers: {
@@ -160,7 +160,7 @@
               console.log(error.response)
             })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       }
     },

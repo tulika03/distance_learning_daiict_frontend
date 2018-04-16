@@ -1,13 +1,15 @@
 <template>
-  <v-app>
+  <v-container>
+    <nav-Menu></nav-Menu>
 
     <v-spacer></v-spacer>
     <v-content>
       <v-container fluid fill-height>
+
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar color="primary">
+              <v-toolbar color="secondary">
                 <v-toolbar-title > Login form</v-toolbar-title>
                 <v-spacer></v-spacer>
 
@@ -20,24 +22,28 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">Login</v-btn>
+                <v-btn color="secondary" @click="login" :to="'/student/Mycourse'">Login</v-btn>
               </v-card-actions>
             </v-card>
-            <v-label><a href="/student/forgotpassword  " >forgot password</a></v-label>
+            <v-label color="secondary"><a href="/student/forgotpassword  " >forgot password</a></v-label>
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
-  </v-app>
+
+  </v-container>
 </template>
 
 <script>
   import Axios from 'axios'
   import Vue from 'vue'
-
+  import menuuu from '@/components/student/menuu'
   import VueLocalStorage from 'vue-localstorage'
   Vue.use(VueLocalStorage)
   export default {
+    name: 'app',
+    components: {'nav-Menu': menuuu},
+
     data () {
       return {
         student_email: '',

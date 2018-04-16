@@ -7,14 +7,16 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar color="primary">
-                <v-toolbar-title >Admin Login form</v-toolbar-title>
+                <v-toolbar-title>Admin Login form</v-toolbar-title>
                 <v-spacer></v-spacer>
 
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="admin_email" label="email ID" type="text" v-model="admin_email"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="admin_password" label="Password" id="admin_password" type="password" v-model="admin_password"></v-text-field>
+                  <v-text-field prepend-icon="person" name="admin_email" label="email ID" type="text"
+                                v-model="admin_email"></v-text-field>
+                  <v-text-field prepend-icon="lock" name="admin_password" label="Password" id="admin_password"
+                                type="password" v-model="admin_password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -33,6 +35,7 @@
   import Axios from 'axios'
   import Vue from 'vue'
   import VueLocalStorage from 'vue-localstorage'
+
   Vue.use(VueLocalStorage)
   export default {
     data () {
@@ -48,20 +51,19 @@
           admin_email: this.admin_email
         }).then(response => {
           Vue.localStorage.set('token', response.data.token)
-        //  console.log(response.data.token)
+          //  console.log(response.data.token)
           localStorage.getItem('token')
         }).catch(error => {
           console.log('Error login')
           console.log(error)
         })
-        this.$router.push('/admin/AdminHome')
       }
     }
   }
 </script>
 <style scoped>
 
-  .center{
+  .center {
     border-radius: 50px;
   }
 </style>

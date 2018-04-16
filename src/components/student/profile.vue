@@ -210,7 +210,7 @@
       },
       updateFaculty () {
         const fd = new FormData()
-        console.log('sdfsdd' + this.student_photo)
+        console.log('helloooooo' + this.student_photo)
         fd.append('student_photo', this.student_photo)
         fd.append('student_name', this.items.student_name)
         fd.append('student_email', this.items.student_email)

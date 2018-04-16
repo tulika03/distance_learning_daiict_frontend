@@ -114,22 +114,30 @@
               console.log(error)
             })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       },
       giveResponse () {
-        const fd = new FormData()
-        fd.append('inquiry_response', this.items.inquiry_response)
-        Axios.patch('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
-          {headers: { 'Content-type': 'multipart/form-data' }})
-          .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
-          .catch(error => {
-            console.log(error.response)
-          })
+        console.log('view id called')
+        console.log(Vue.localStorage.get('token'))
+        var jwt = Vue.localStorage.get('token')
+        console.log('view id called')
+        if (jwt) {
+          const fd = new FormData()
+          fd.append('inquiry_response', this.items.inquiry_response)
+          Axios.patch('http://192.168.137.1:3000/admin/inquiries/respond/' + this.$route.params.id, fd,
+            {headers: {'Content-type': 'multipart/form-data'}})
+            .then(r => console.log('r: ', JSON.stringify(r, null, 2)))
+            .catch(error => {
+              console.log(error.response)
+            })
+        } else {
+          this.$router.push('/admin/')
+        }
+      },
+      mounted () {
+        this.getDetail()
       }
-    },
-    mounted () {
-      this.getDetail()
     }
   }
 </script>

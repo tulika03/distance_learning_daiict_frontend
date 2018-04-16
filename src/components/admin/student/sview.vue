@@ -28,13 +28,12 @@
           </v-tooltip>
         </template>
         <template slot="items" slot-scope="props">
-          <td>{{ props.item._id }}</td>
-          <td class="text-xs-right">{{ props.item.student_name }}</td>
-          <td class="text-xs-right">{{ props.item.student_email }}</td>
-          <td class="text-xs-right">{{ props.item.student_contact_number }}</td>
-          <td class="text-xs-right">{{ props.item.student_education_level }}</td>
-          <td class="text-xs-right">{{ props.item.student_experience }}</td>
-          <td class="text-xs-right">{{ props.item.student_address }}</td>
+                  <td class="text-xs-right">{{ props.item.student_name }}</td>
+          <td class="text-xs-left">{{ props.item.student_email }}</td>
+          <td class="text-xs-left">{{ props.item.student_contact_number }}</td>
+          <td class="text-xs-left">{{ props.item.student_education_level }}</td>
+          <td class="text-xs-left">{{ props.item.student_experience }}</td>
+          <td class="text-xs-left">{{ props.item.student_address }}</td>
         </template>
       </v-data-table>
     </v-flex>

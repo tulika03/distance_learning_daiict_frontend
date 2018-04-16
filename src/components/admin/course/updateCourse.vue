@@ -81,7 +81,7 @@
             console.log(error)
           })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       },
       updateCourse () {
@@ -105,7 +105,7 @@
             console.log(error.response)
           })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/admin/')
         }
       }
     },

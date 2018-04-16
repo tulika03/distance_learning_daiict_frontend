@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <v-spacer></v-spacer>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -24,6 +23,7 @@
                 <v-btn color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
+            <label color="secondary"><a href="/admin/adminforgotpwd" >forgot password</a></label>
           </v-flex>
         </v-layout>
       </v-container>

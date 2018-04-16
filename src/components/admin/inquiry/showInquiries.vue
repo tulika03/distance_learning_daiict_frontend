@@ -9,17 +9,16 @@
         </h2>
       </v-flex>
     </v-layout>
-  <v-data-table
-    :headers="headers"
-    :items="items"
-    v-for="item in items"
-    :key="item._id"
-    class="elevation-1"
-  >
-    <template slot="items" slot-scope="props">
+    <v-data-table
+      :headers="headers"
+      :items="items"
+      class="elevation-1"
+    >
+      <template slot="items" slot-scope="props">
+      <td>{{ props.item.inquiry_date_posted }}</td>
       <td>{{ props.item.inquiry_email }}</td>
       <td class="text-xs-left"><b>{{ props.item.inquiry_title }}</b></td>
-      <td> <v-btn :key="item._id"  v-bind:to= "{name: 'AdminviewInquiry', params: {id: item._id } }" class="green lighten-2 white--text"> View</v-btn></td>
+      <td> <v-btn  :key="props.item._id"  v-bind:to= "{name: 'AdminviewInquiry', params: {id: props.item._id } }" class="green lighten-2 white--text"> View</v-btn></td>
     </template>
   </v-data-table>
   </v-container>
@@ -35,29 +34,28 @@
     data () {
       return {
         headers: [
+          { text: 'Date', value: 'inquiry_date_posted' },
           {
             text: 'Email ID',
             align: 'left',
             sortable: false,
             value: 'inquiry_email'
           },
-          { text: 'Date', value: 'inquiry_date' },
           { text: 'Subject', value: 'inquiry_title' }
         ],
-        items: [{
-          value: false,
-          _id: '',
-          inquiry_date: '',
-          inquiry_title: '',
-          inquiry_email: ''
-        }],
+        items: [],
+        value: false,
+        inquiry_date_posted: '',
+        inquiry_title: '',
+        inquiry_email: '',
         sideNav: false,
+        _id: '',
         right: null
       }
     },
     created: function () {
-      console.log(Vue.localStorage.get('token'))
       var jwt = Vue.localStorage.get('token')
+      console.log(Vue.localStorage.get('token'))
       if (jwt) {
         Axios.get('http://192.168.137.1:3000/admin/inquiry/view', {
           headers: {

@@ -52,42 +52,37 @@
                 :rules="passwordRules"
               ></v-text-field>
 
-
-
-                  <v-text-field name="faculty_contact_number"
+              <v-text-field name="faculty_contact_number"
                                 label="Contact"
                                 id="contact"
                                 v-model.number="faculty_contact_number"
                                 :rules="contactRules"
                                 required>
 
-                  </v-text-field>
+              </v-text-field>
 
-                  <v-text-field name="faculty_educational_details"
+              <v-text-field name="faculty_educational_details"
                                 label="Educational Details"
                                 id="educational-detail"
                                 v-model="faculty_educational_details"
                                 :rules="eduRules"
                                 required>
+              </v-text-field>
 
-                  </v-text-field>
-
-                  <v-text-field name="faculty_area_interest"
+              <v-text-field name="faculty_area_interest"
                                 label="Interest Area"
                                 id="interest-area"
                                 v-model="faculty_area_interest"
                                 :rules="interestRules"
                                 required>
-
-                  </v-text-field>
+              </v-text-field>
 
               <v-layout row>
                 <v-flex xs12 sm6>
                   <v-btn flat class="orange"
                          :disabled="!formIsValid"
                          type="submit"
-                         @click="addFaculty"
-                  >Add
+                         @click="addFaculty">Add
                   </v-btn>
                 </v-flex>
               </v-layout>

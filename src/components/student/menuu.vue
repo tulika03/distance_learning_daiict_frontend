@@ -8,7 +8,7 @@
               <img src=" " >
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title router :to="'/student/EditProfile'">Profile</v-list-tile-title>
+              <v-list-tile-title ><a href="/student/EditProfile/:id">Profile</a></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -32,9 +32,13 @@
         <v-toolbar-title class="white--text"> DAIICT Distance Learning</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only">
-          <v-btn flat :to="'/student/login'" class="white--text">
+          <v-btn flat :to="'/student/login'"  v-show="!isLoggedIn" class="white--text">
 
             Login
+          </v-btn>
+          <v-btn flat :to="'/'" class="white--text" @click="logout" v-show="isLoggedIn">
+
+            Logout
           </v-btn>
           <v-btn flat :to="'/student/add'" class="white--text">
 
@@ -54,14 +58,21 @@
   export default {
     data () {
       return {
-
+        isLoggedIn: false,
         sideNav: false,
         menuItems: [
           {title: 'Home', icon: 'home', link: '/'},
           {title: 'My Course', icon: 'assignment', link: '/student/MyCourse'},
-          {title: 'Complains', icon: 'help', link: '/student/complains/:FC_id'}
+          {title: 'Inquiry', icon: 'help', link: '/student/inquiry'}
         ],
         right: null
+      }
+    },
+    methods: {
+      logout: function () {
+        localStorage.removeItem('token')
+        console.log('token deleted')
+        this.$router.push('/')
       }
     }}
 </script>

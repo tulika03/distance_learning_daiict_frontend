@@ -106,7 +106,7 @@
       async getDetail () {
         console.log('view id called')
         var jwt = Vue.localStorage.get('token')
-        console.log('view id called' + jwt )
+        console.log('view id called' + jwt)
         console.log(this.$route.params._id)
         if (jwt) {
           Axios.get('http://192.168.137.1:3000/student/course/subtopics/' + this.$route.params.id,

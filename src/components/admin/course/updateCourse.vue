@@ -28,6 +28,24 @@
                   >
                     {{ items.course_subject }}
                   </v-text-field>
+
+                  <v-text-field
+                    label="Description"
+                    v-model="items.course_description"
+                    name="items.course_description"
+                    required
+
+                  >
+                    {{ items.course_description }}
+                  </v-text-field>
+                  <label>Upload Image*</label>    <br><br>
+                  <div>
+                    <input type=file
+                           @change="onFileSelected"
+                           class="text--primary" required
+                           accept="image/*" >
+                  </div >
+                  <br>
                 </v-card-text>
                 <v-card-actions >
                   <v-btn @click="updateCourse" color="indigo" class="text--white"> SUBMIT </v-btn>
@@ -53,7 +71,9 @@
       return {
         items: {
           _id: '',
-          course_subject: ''
+          course_photo: '',
+          course_subject: '',
+          course_description: ''
         },
         sideNav: false,
         right: null
@@ -61,6 +81,10 @@
       }
     },
     methods: {
+      onFileSelected (event) {
+        this.course_photo = event.target.files[0]
+        console.log(this.course_photo)
+      },
       async getDetail () {
         console.log(Vue.localStorage.get('token'))
         var jwt = Vue.localStorage.get('token')
@@ -90,10 +114,11 @@
         var jwt = Vue.localStorage.get('token')
         console.log('view id called')
         if (jwt) {
-        //  fd.append('course_subject', this.course_subject)
-          Axios.patch('http://192.168.137.1:3000/admin/course/update/' + this.$route.params.id, {
-            'course_subject': this.items.course_subject
-          },
+          const fd = new FormData()
+          fd.append('course_photo', this.course_photo)
+          fd.append('course_subject', this.items.course_subject)
+          fd.append('course_description', this.items.course_description)
+          Axios.patch('http://192.168.137.1:3000/admin/course/update/' + this.$route.params.id, fd,
             {
               headers: {
               //  'Content-type': 'multipart/form-data',

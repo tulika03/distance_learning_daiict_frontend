@@ -14,6 +14,9 @@ import AdminViewComplain from '@/components/admin/complain/viewComplain'
 import AdminListInquiries from '@/components/admin/inquiry/showInquiries'
 import AdminviewInquiry from '@/components/admin/inquiry/viewInquiry'
 import AdminLogin from '@/components/admin/login'
+import Adminforgotpwd from '@/components/admin/adminforgotpwd'
+import Adminpwdreset from '@/components/admin/adminpwdreset'
+import AddAdmin from '@/components/admin/addNewAdmin'
 import StudentSignUp from '@/components/student/StudentSignup'
 import StudentLogin from '@/components/student/StudentLogin'
 import EditProfile from '@/components/student/profile'
@@ -27,7 +30,7 @@ import studentHome from '@/components/student/home'
 import StudInquiry from '@/components/student/inquiry'
 import Studfeedback from '@/components/student/studentfeedback'
 import MyCourses from '@/components/student/MyCourse'
-// import Exam from '@/components/student/exam'
+import Exam from '@/components/student/exam'
 
 // import StudHome from '@/components/student/home'
 Vue.use(Router)
@@ -105,6 +108,21 @@ export default new Router({
       component: adminHome
     },
     {
+      path: '/admin/adminforgotpwd',
+      name: 'Adminforgotpwd',
+      component: Adminforgotpwd
+    },
+    {
+      path: '/admin/adminpwdreset',
+      name: 'Adminpwdreset',
+      component: Adminpwdreset
+    },
+    {
+      path: '/admin/addNewAdmin',
+      name: 'AddAdmin',
+      component: AddAdmin
+    },
+    {
       path: '/student/add',
       name: 'StudnetSignUp',
       component: StudentSignUp
@@ -168,12 +186,12 @@ export default new Router({
       path: '/student/Mycourse',
       name: 'MyCourses',
       component: MyCourses
-    }
- /*   {
+    },
+    {
       path: '/student/exam',
       name: 'Exam',
       component: Exam
-    } */
+    }
   ],
   mode: 'history'
 })

@@ -15,9 +15,6 @@
         :headers="headers"
         :items="items"
         class="elevation-1"
-        v-for="item in items"
-        :key="item._id"
-
       >
         <template slot="headerCell" slot-scope="props">
           <v-tooltip bottom>
@@ -28,6 +25,7 @@
           </v-tooltip>
         </template>
         <template slot="items" slot-scope="props">
+
                   <td class="text-xs-right">{{ props.item.student_name }}</td>
           <td class="text-xs-left">{{ props.item.student_email }}</td>
           <td class="text-xs-left">{{ props.item.student_contact_number }}</td>
@@ -58,17 +56,15 @@
           {text: 'Educational Qualification', value: 'student_education_level'},
           { text: 'Address', value: 'student_address' }
         ],
-        items: [
-          {
-            value: false,
-            _id: '',
-            student_name: '',
-            student_experience: '',
-            student_education_level: '',
-            student_email: '',
-            student_contact_number: '',
-            student_address: ''
-          }],
+        items: [],
+        value: false,
+        _id: '',
+        student_name: 'fisejfi',
+        student_experience: 'jdwhd',
+        student_education_level: 'dsfcds',
+        student_email: 'dfsdf',
+        student_contact_number: 'dfsdf',
+        student_address: 'dfsd',
         sideNav: false,
         right: null
       }
@@ -84,7 +80,7 @@
         })
         .then((response) => {
           this.items = response.data
-          console.log('It works')
+          console.log(this.items)
         })
         .catch((error) => {
           console.log(error)

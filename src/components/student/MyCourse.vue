@@ -61,6 +61,7 @@
   import menuuu from '@/components/student/menuu'
 
   export default {
+    isLoggedIn: true,
     name: 'app',
     components: {'nav-Menu': menuuu},
 

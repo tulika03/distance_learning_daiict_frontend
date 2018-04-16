@@ -1,6 +1,6 @@
 <template>
   <v-container fluid="true">
-    <navMenu></navMenu>
+    <nav-Menu></nav-Menu>
     <v-layout>
       <v-flex>
 
@@ -154,10 +154,10 @@
 <script>
   import Axios from 'axios'
   import Vue from 'vue'
-  import Menu from '@/components/admin/menu'
+  import Menu from '@/components/student/menuu'
   export default {
     name: 'app',
-    components: {'navMenu': Menu},
+    components: {'nav-Menu': Menu},
     data () {
       return {
         items: {

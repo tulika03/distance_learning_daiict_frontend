@@ -1,6 +1,12 @@
 <template>
   <v-container>
     <nav-Menu></nav-Menu>
+    <v-layout>
+      <v-flex>
+        <v-btn  v-bind:to="{name: 'Exam', params: {id: items._id } }" class="green white--text right"> TAKE TEST </v-btn>
+      </v-flex>
+    </v-layout>
+
     <v-layout row wrap>
       <v-flex xs12 sm12 offset-sm1><div>
         <v-card class="grey lighten-4 mb-3" v-for="item in items" :key="item._id">
@@ -28,10 +34,17 @@
             </v-layout>
           </v-container>
 
+
+
         </v-card>
         <br>
+
       </div>
         <br><br><hr>
+
+
+
+
 
       </v-flex>
     </v-layout>

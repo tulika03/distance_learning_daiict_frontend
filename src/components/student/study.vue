@@ -58,7 +58,8 @@
                   type="file"
                   @change="onFileSelected"
                   required
-                  name="upload_assignment"
+                  name="subtopic_assignment_submission"
+                  id="subtopic_assignment_submission"
                 > <br><br>
                 <v-btn @click="PostAssignment" type="submit" class="cyan lighten-4" >Upload</v-btn>
               </div>
@@ -90,7 +91,7 @@
           subtopic_name: '',
           subtopic_assignment: '',
           subtopic_video: '',
-          upload_assignment: '',
+          subtopic_assignment_submission: '',
           subtopic_description: '',
           subtopic_weight: ''
         }
@@ -99,13 +100,13 @@
 
     methods: {
       onFileSelected (event) {
-        this.upload_assignment = event.target.files[0]
-        console.log(this.upload_assignment)
+        this.subtopic_assignment_submission = event.target.files[0]
+        console.log(this.subtopic_assignment_submission)
       },
       async getDetail () {
         console.log('view id called')
         var jwt = Vue.localStorage.get('token')
-        console.log('view id called')
+        console.log('view id called' + jwt )
         console.log(this.$route.params._id)
         if (jwt) {
           Axios.get('http://192.168.137.1:3000/student/course/subtopics/' + this.$route.params.id,
@@ -127,11 +128,13 @@
       },
       PostAssignment () {
         const fd = new FormData()
-        fd.append('upload_assignment', this.upload_assignment)
         var jwt = Vue.localStorage.get('token')
-        console.log('view id called')
+        console.log(this.$route.params.id)
+        console.log(this.subtopic_assignment_submission)
+        console.log('view id called' + jwt)
         if (jwt) {
-          Axios.post('http://192.168.137.1:3000/' + this.$route.params.id, fd,
+          fd.append('subtopic_assignment_submission', this.subtopic_assignment_submission)
+          Axios.post('http://192.168.137.1:3000/student/course/assignment/' + this.$route.params.id, fd,
             {
               headers: {
                 'Content-type': 'multipart/form-data',
@@ -143,7 +146,7 @@
               console.log(error.response)
             })
         } else {
-          this.$router.push('/admin/login')
+          this.$router.push('/student/login')
         }
       }
     },

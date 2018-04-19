@@ -86,7 +86,7 @@
   export default {
     name: 'app',
     components: {'navMenu': Menu},
-    data() {
+    data () {
       return {
         sideNav: false,
         items: {
@@ -129,7 +129,7 @@
       }
     },
     methods: {
-      giveResponse() {
+      giveResponse () {
         const fd = new FormData()
         fd.append('complaint_response', this.items.complaint_response)
         console.log(Vue.localStorage.get('token'))
@@ -150,7 +150,7 @@
           this.$router.push('/admin/')
         }
       },
-      mounted() {
+      mounted () {
         this.getDetail()
       }
     }

@@ -59,12 +59,6 @@
         items: [],
         value: false,
         _id: '',
-        student_name: 'fisejfi',
-        student_experience: 'jdwhd',
-        student_education_level: 'dsfcds',
-        student_email: 'dfsdf',
-        student_contact_number: 'dfsdf',
-        student_address: 'dfsd',
         sideNav: false,
         right: null
       }

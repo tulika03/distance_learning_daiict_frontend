@@ -188,7 +188,7 @@ export default new Router({
       component: MyCourses
     },
     {
-      path: '/student/exam',
+      path: '/student/exam/:id',
       name: 'Exam',
       component: Exam
     }

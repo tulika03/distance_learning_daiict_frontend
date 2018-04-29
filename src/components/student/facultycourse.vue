@@ -83,7 +83,7 @@
       localStorage.setItem('subtop', JSON.stringify(this.facultyCourse_subtopic))
 
       if (jwt) {
-        Axios.get('http://192.168.137.1:3000/student/course/view/' + this.$route.params.id, {
+        Axios.get('http://192.168.137.1:3000/student/course/viewFC/' + this.$route.params.id, {
           headers: {
             'Authorization': 'bearer ' + Vue.localStorage.get('token')
           }
@@ -97,7 +97,7 @@
           })
       } else {
         console.log(this.$route.params)
-        Axios.get('http://192.168.137.1:3000/student/course/view/' + this.$route.params.id)
+        Axios.get('http://192.168.137.1:3000/student/course/viewFC/' + this.$route.params.id)
           .then((response) => {
             this.items = response.data
             console.log(response.data)

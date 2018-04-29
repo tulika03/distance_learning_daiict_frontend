@@ -14,7 +14,7 @@
     </v-layout>
     <div
       style="min-width: 560px; margin: auto;"
-      class="orange lighten-4" >
+      class="grey lighten-4" >
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>
@@ -44,7 +44,7 @@
 
               <v-layout row>
                 <v-flex xs12 sm6>
-                  <v-btn flat class="indigo"
+                  <v-btn  class="purple"
                          :disabled="!formIsValid"
                          type="submit"
                          @click="addCourses"
@@ -79,7 +79,7 @@
 
     computed: {
       formIsValid () {
-        return this.course_subject !== ''
+        return this.course_subject !== '' && this.course_description !== ''
       }
     },
     methods: {

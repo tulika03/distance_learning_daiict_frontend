@@ -11,8 +11,7 @@
 
     </v-layout>
     <div
-      style="min-width: 560px; margin: auto;"
-      class="orange lighten-4" >
+      style="min-width: 560px; margin: auto;">
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-container>

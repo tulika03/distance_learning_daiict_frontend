@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <nav-Menu></nav-Menu>
+
 
     <v-spacer></v-spacer>
     <v-content>
@@ -9,7 +9,7 @@
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar color="secondary">
+              <v-toolbar color="primary">
                 <v-toolbar-title > Login form</v-toolbar-title>
                 <v-spacer></v-spacer>
 
@@ -22,10 +22,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="secondary" @click="login" :to="'/student/Mycourse'">Login</v-btn>
+                <v-btn color="primary" @click="login" >Login</v-btn>
               </v-card-actions>
             </v-card>
-            <v-label color="secondary"><a href="/student/forgotpassword  " >forgot password</a></v-label>
+            <v-label color="primary"><a href="/student/forgotpassword  " >forgot password</a></v-label> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            <v-label color="primary"><a href="/TA/login  " >Login as TA </a></v-label>
           </v-flex>
         </v-layout>
       </v-container>
@@ -60,9 +61,13 @@
           Vue.localStorage.set('token', response.data.token)
           console.log(response.data.token)
           localStorage.getItem('token')
+          this.$router.push('/student/Mycourse')
         }).catch(error => {
           console.log('Error login')
           console.log(error)
+          window.alert('Please enter correct username and Password')
+          this.$router.push('/student/login')
+
         })
       }
     }

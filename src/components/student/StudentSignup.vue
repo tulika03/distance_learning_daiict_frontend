@@ -1,6 +1,6 @@
 <template>
   <v-container>
-  <nav-Menu></nav-Menu>
+
     <v-content>
       <v-container fluid fill-height>
 

@@ -11,23 +11,33 @@
 
         <h3 style="justify-content: center;display: flex; color: darkcyan">SUBTOPIC &nbsp;  {{items.subtopic_name}}</h3>
 
-          <v-flex>
-
           <v-flex xs5 sm4 md3>
+
+          <v-flex offset-sm1>
             <!--<video width="1200" height="540" controls >-->
               <!--<source :src=this.items.subtopic_video type="video/mp4">-->
 
             <!--</video>-->
-            <iframe width="1200" height="540" :src=this.items.subtopic_video allowfullscreen ></iframe>
+            <iframe width="900" height="540" :src=this.items.subtopic_video allowfullscreen ></iframe>
           </v-flex>
         </v-flex>
         <v-container>
-          <v-flex xs6>
+          <v-flex xs11>
+            <v-card>
+              <div><label class= " grey lighten-4 mb-3 ml-4 cyan--text"><h2> Description: </h2>&nbsp; </label> {{ items.subtopic_description }}</div><br>
+            </v-card>
+          </v-flex>
+          <br>
+          <br>
+
+<v-layout row wrap >
+          <v-flex xs3 sm4>
+<v-card>
             <v-card class="grey lighten-4 mb-3">
               <v-card-title primary-title>
                 <div class="text--black">
                   <div><h3 class="blue--text ml-4" mp-0> FACULTY NOTES </h3></div><br>
-                  <div><label class="ml-4 cyan--text"> Description: &nbsp; </label> {{ items.subtopic_description }}</div><br>
+
                 </div>
               </v-card-title>
                 <v-card-actions>
@@ -37,37 +47,34 @@
 
                     <v-btn class="cyan lighten-4" v-bind:to= "{name: 'Studfeedback', params: {id: items._id }}">Give Feedback</v-btn>
 
-                    <v-btn class="cyan lighten-4">Discussion</v-btn>
 
               </v-card-actions>
 
+            </v-card>
+                  <v-card class="grey lighten-4 mb-3">
+                  <div class="container">
+                    <div class="dropbox">
+                      <label>UPLOAD ASSIGNMENT</label>
+                      <br>
+                      <br>
+                      <input
+                        type="file"
+                        @change="onFileSelected"
+                        required
+                        name="subtopic_assignment_submission"
+                        id="subtopic_assignment_submission"
+                      > <br><br>
+                      <v-btn @click="PostAssignment" type="submit" class="cyan lighten-4" >Upload</v-btn>
+                    </div>
+                  </div>
+                </v-card>
 
+                <br>
+</v-card>      </v-flex>
 
-          </v-card>
-          </v-flex>
-
+</v-layout>
         </v-container>
-          <v-flex xs6>
-            <v-card class="grey lighten-4 mb-3">
-            <div class="container">
-              <div class="dropbox">
-                <label>UPLOAD ASSIGNMENT</label>
-                <br>
-                <br>
-                <input
-                  type="file"
-                  @change="onFileSelected"
-                  required
-                  name="subtopic_assignment_submission"
-                  id="subtopic_assignment_submission"
-                > <br><br>
-                <v-btn @click="PostAssignment" type="submit" class="cyan lighten-4" >Upload</v-btn>
-              </div>
-            </div>
-    </v-card>
 
-    <br>
-        </v-flex>
         </v-flex>
       </v-layout>
   </v-container>

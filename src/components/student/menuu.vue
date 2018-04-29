@@ -40,7 +40,7 @@
 
             Logout
           </v-btn>
-          <v-btn flat :to="'/student/add'" class="white--text">
+          <v-btn flat :to="'/student/signup'" class="white--text">
 
             Signup
           </v-btn>

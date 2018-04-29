@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <nav-Menu></nav-Menu>
+    <nav-Menu></nav-Menu>
 
     <v-layout>
       <v-layout row wrap>
@@ -23,7 +23,7 @@
 
 
         <v-layout column>
-          <v-flex xs6 sm4>
+          <v-flex xs3 sm4>
 
             <v-card>
               <v-container fluid grid-list-md>
@@ -34,7 +34,7 @@
                     :key="card.title"
                   >
 
-                    <v-card>
+                    <v-card width="200" height="550">
                       <v-card-media
                         :src="card.course_photo"
                         height="200px"
@@ -48,18 +48,30 @@
                           </v-layout>
                         </v-container>
                       </v-card-media>
-                      <div class="text--black">
-                        <div><h3 class="blue--text darken-4" mp-0> {{ card.course_subject }} </h3></div>
-                        <div> {{ card.course_description }}</div>
-                        <br>
+                      <v-flex>
 
-                      </div>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn flat color="orange" :to="card.link" v-bind:to= "{name: 'StudentFacultyCourse', params: {id: card._id } }">Explore</v-btn>
-                      </v-card-actions>
+                          <div class="text--black">
+                            <div><h3 class="blue--text darken-4" mp-0> {{ card.course_subject }} </h3></div>
+                            <div> {{ card.course_description}}</div>
+                            <br>
+
+                          </div>
+
+
+
+                        <v-card-actions>
+
+                          <v-btn absolute bottom  style="margin-top: auto"  color="orange" :to="card.link"
+                                 v-bind:to="{name: 'StudentFacultyCourse', params: {id: card._id } }">Explore
+                          </v-btn>
+                        </v-card-actions>
+                        <br>
+                        <br>
+                      </v-flex>
                     </v-card>
                     <v-spacer></v-spacer>
+                    <br>
+
                     <br>
                   </v-flex>
                 </v-layout>
@@ -84,8 +96,9 @@
   export default {
     name: 'app',
     components: {'nav-Menu': menuuu},
-    data () {
-      return {sideNav: false,
+    data() {
+      return {
+        sideNav: false,
         right: null,
         items: [
           {
@@ -108,18 +121,18 @@
         }
       }
     },
-  /*  computed: {
-      cards () {
-        let cards = [
-          {
-            course_subject: '',
-            course_photo: '',
-            course_description: ''
-          }
-        ]
-        return cards
-      }
-    }, */
+    /*  computed: {
+        cards () {
+          let cards = [
+            {
+              course_subject: '',
+              course_photo: '',
+              course_description: ''
+            }
+          ]
+          return cards
+        }
+      }, */
     created: function () {
       console.log('hello')
       Axios.get('http://192.168.137.1:3000/student/course/view')

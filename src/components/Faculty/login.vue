@@ -1,21 +1,22 @@
 <template>
   <v-app>
+    <v-spacer></v-spacer>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar color="primary">
-                <v-toolbar-title>Admin Login form</v-toolbar-title>
+                <v-toolbar-title>Faculty Login form</v-toolbar-title>
                 <v-spacer></v-spacer>
 
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="admin_email" label="email ID" type="text"
-                                v-model="admin_email"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="admin_password" label="Password" id="admin_password"
-                                type="password" v-model="admin_password"></v-text-field>
+                  <v-text-field prepend-icon="person" name="faculty_email" label="email ID" type="text"
+                                v-model="faculty_email"></v-text-field>
+                  <v-text-field prepend-icon="lock" name="faculty_password" label="Password" id="admin_password"
+                                type="password" v-model="faculty_password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -23,7 +24,6 @@
                 <v-btn color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
-            <label color="secondary"><a href="/admin/adminforgotpwd" >forgot password</a></label>
           </v-flex>
         </v-layout>
       </v-container>
@@ -40,28 +40,32 @@
   export default {
     data () {
       return {
-        admin_email: '',
-        admin_password: ''
+        faculty_email: '',
+        faculty_password: '',
+        FC_id: ''
       }
     },
     methods: {
       login: function () {
-        Axios.post('http://192.168.137.1:3000/admin/login', {
-          admin_password: this.admin_password,
-          admin_email: this.admin_email
+        console.log('hello login function')
+        Axios.post('http://192.168.137.1:3000/faculty/login', {
+          faculty_password: this.faculty_password,
+          faculty_email: this.faculty_email
         }).then(response => {
           Vue.localStorage.set('token', response.data.token)
+          Vue.localStorage.set('id', response.data.id)
+          console.log(response.data.token)
+          console.log(response.data.id)
           //  console.log(response.data.token)
           localStorage.getItem('token')
-          this.$router.push('/admin/AdminHome')
+          this.$router.push('/faculty/index')
         }).catch(error => {
           console.log('Error login')
           console.log(error)
-          window.alert('Please enter correct username and Password')
-          this.$router.push('/admin/')
+          this.$router.push('/faculty/')
+          alert('Invalid Username and Password')
         })
       }
-
     }
   }
 </script>

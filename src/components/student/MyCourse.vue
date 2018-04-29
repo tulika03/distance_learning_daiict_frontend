@@ -79,7 +79,6 @@
         }
       }
     },
-
     created: function () {
       console.log('id is called')
       console.log(Vue.localStorage.get('token'))
@@ -99,7 +98,6 @@
           })
       } else {
         this.$router.push('/student/login')
-        console.log('else part')
       }
     }
   }

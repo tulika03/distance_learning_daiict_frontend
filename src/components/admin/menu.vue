@@ -41,6 +41,17 @@
                     </v-list-tile>
                   </v-list-group>
                 </v-list>
+                <v-list dense class="pt-0">
+                  <v-list-tile v-for="item in menuitems2" :key="item.title" @click="" router
+                               :to="item.link">
+                    <v-list-tile-action>
+                      <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
               </v-card>
             </v-flex>
           </v-layout>
@@ -80,19 +91,21 @@
               {title: 'View Faculty', icon: 'view_array', link: '/admin/faculty/viewFaculty'}
             ]
           },
-          {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'},
+
           {
             title: 'Course',
             icon: 'dashboard',
             active: true,
             menuItems: [
-              {title: 'View Course', icon: 'view_array', link: '/admin/course/remove'},
+              {title: 'View Course', icon: 'view_array', link: '/admin/course/view'},
               {title: 'Create Course', icon: 'note_add', link: '/admin/course/create'}
             ]
-          },
+          }
+        ],
+        menuitems2: [
           {title: 'Enquiries', icon: 'dashboard', link: '/admin/inquiry/showInquiries'},
-          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'}
-
+          {title: 'Complains', icon: 'dashboard', link: '/admin/complain/listcomplains'},
+          {title: 'Student', icon: 'dashboard', link: '/admin/student/sview'}
         ]
       }
     },

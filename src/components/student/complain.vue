@@ -76,7 +76,7 @@
               console.log(this.complaint_description)
             })
 
-          this.$router.push('/admin/')
+          this.$router.push('/')
         } else {
           this.$router.push('/student/login')
         }

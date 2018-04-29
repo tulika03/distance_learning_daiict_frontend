@@ -14,13 +14,14 @@
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex xs12 sm5 offset-sm3>
-          <v-card class="light-blue lighten-5 mb-4" v-for="item in items" :key="item._id">
+        <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
+          <v-card class="grey-lighten-5  mb-3" v-for="item in items" :key="item._id">
             <v-container fluid
                          grid-list-lg>
               <v-card-media
                 :src="item.course_photo"
-                height="190px" width="150px">
+                height="190px" width="150px"
+              contain>
               </v-card-media>
 
         <v-flex>
@@ -33,15 +34,17 @@
           </v-card-title>
 
               <v-card-actions>
-                <v-btn flat class="green white--text" v-bind:to= "{name: 'adminUpdateCourse', params: {id: item._id }}">Edit</v-btn>
-                <v-btn flat class="green white--text" @click="deleteData(item._id)"> Delete</v-btn>
+                <v-btn flat class="purple" v-bind:to= "{name: 'adminUpdateCourse', params: {id: item._id }}">Edit</v-btn>
+                <v-btn flat class="purple" @click="deleteData(item._id)"> Delete</v-btn>
               </v-card-actions>
 
         </v-flex>
-
+<br>
             </v-container>
 
           </v-card>
+          <br>
+          <br>
         </v-flex>
       </v-layout>
     </div>

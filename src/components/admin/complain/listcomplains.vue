@@ -35,8 +35,8 @@
     data () {
       return {
         headers: [
-          { text: 'Student Name', value: 'student_name' },
           { text: 'Date', value: 'complaint_date_posted' },
+          { text: 'Student Name', value: 'student_name' },
           { text: 'Subject', value: 'complaint_title' }
         ],
         items: [],

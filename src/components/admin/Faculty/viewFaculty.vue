@@ -101,6 +101,7 @@
       }
     },
     created: function () {
+      console.log('hhh')
       console.log(Vue.localStorage.get('token'))
       var jwt = Vue.localStorage.get('token')
       if (jwt) {
